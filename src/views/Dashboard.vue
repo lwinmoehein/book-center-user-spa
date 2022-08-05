@@ -1,7 +1,7 @@
 <template>
-  <div class="p-5 xl:px-0">
+  <div class="p-0 xl:px-0">
     <div class="max-w-xl m-auto">
-      <article class="p-5 bg-white rounded shadow">
+      <article class="p-2 bg-white rounded shadow">
         <Books />
       </article>
     </div>
