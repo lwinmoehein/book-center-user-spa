@@ -1,9 +1,10 @@
 <template>
   <div id="app">
-    <Header />
     <main class="container mx-auto">
       <router-view />
     </main>
+    <Header v-if="isLoggedIn" />
+
   </div>
 </template>
 
@@ -15,6 +16,11 @@ export default {
   components: {
     Header,
   },
+  computed: {
+    isLoggedIn() {
+      return this.$route.name != "login" && this.$route.name != "register";
+    }
+  }
 };
 </script>
 
@@ -25,6 +31,7 @@ export default {
 .fade-leave-active {
   opacity: 0;
 }
+
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.3s ease;

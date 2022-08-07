@@ -3,13 +3,14 @@
     <transition name="fade" mode="out-in">
       <FlashMessage message="loading..." v-if="loading && !books.length" key="loading" />
       <div>
-        <div class="flex flex-nowrap text-center sticky top-0 bg-white">
-          <div v-for="language in all_languages" :key="language.id" class="flex-1 border-b-2 border-blue-400 pt-3 pb-3">
+        <div class="flex flex-nowrap text-center overflow-scroll sticky top-0 bg-white">
+          <div @click="onLanguageTabClicked(language)" v-for="language in all_languages" :key="language.id"
+            class="border-b-2 border-blue-400 pt-3 pb-3 w-32 flex-none cursor-pointer">
             <span class="box-decoration-slice bg-gradient-to-r from-indigo-600 to-green-500 text-white px-2 ...">
-              {{language.name}}
+              {{ language.name }}
             </span>
           </div>
-       
+
         </div>
         <div class="p-3">
           <div class="flex justify-between mt-5 mb-2">
@@ -58,6 +59,13 @@ import Book from '@/components/Book';
 export default {
   name: "Books",
   components: { FlashMessage, BasePagination, Book },
+  data() {
+    return {
+      selectedLanguage: 3,
+      currentPage: 1,
+      currentRecommendedPage: 1
+    }
+  },
   computed: {
     ...mapGetters(
       "book", [
@@ -65,14 +73,12 @@ export default {
       "books", "meta", "links",
       "recommended_books", "recommended_meta", "recommended_links"
     ]),
-    ...mapGetters("language",["all_languages"])
+    ...mapGetters("language", ["all_languages"])
   },
   created() {
-    const currentPage = 1;
-    const currentRecommendedPage = 1
     this.$store.dispatch("language/getLanguages");
-    this.$store.dispatch("book/getBooks", currentPage);
-    this.$store.dispatch("book/getRecommendedBooks", currentRecommendedPage);
+    this.updateTopBooks();
+    this.updateRecommendedBooks();
   },
   watch: {
     recommended_books() {
@@ -80,6 +86,20 @@ export default {
         this.$router.push("/update-category");
 
       }
+    }
+  },
+  methods: {
+    onLanguageTabClicked(language) {
+      this.selectedLanguage = language.id;
+      this.updateTopBooks();
+    },
+    updateTopBooks() {
+      this.$store.dispatch("book/getBooks", { page: this.currentPage, language: this.selectedLanguage });
+
+    },
+    updateRecommendedBooks() {
+      this.$store.dispatch("book/getRecommendedBooks", this.currentRecommendedPage);
+
     }
   }
 

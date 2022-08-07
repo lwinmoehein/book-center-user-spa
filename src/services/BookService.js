@@ -1,8 +1,8 @@
 import * as API from "@/services/API";
 
 export default {
-  getBooks(page) {
-    return API.apiClient.get(`/books/?page=${page}`);
+  getBooks(page,language) {
+    return API.apiClient.get(`/books/?page=${page}&language=${language}`);
   },
   getRecommendedBooks(page) {
     return API.apiClient.get(`/books/category/?page=${page}`);

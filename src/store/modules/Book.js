@@ -56,9 +56,9 @@ export const mutations = {
 };
 
 export const actions = {
-  getBooks({ commit }, page) {
+  getBooks({ commit }, payload) {
     commit("SET_LOADING", true);
-    BookService.getBooks(page)
+    BookService.getBooks(payload.page,payload.language)
       .then((response) => {
         setPaginatedBooks(commit, response);
       })
