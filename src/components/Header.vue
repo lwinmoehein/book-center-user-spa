@@ -9,7 +9,7 @@
       </div>
       <div class="flex-1 flex  justify-center">
 
-        <router-link to="/dashboard" class="flex justify-center items-center" :class="{'text-green-700':currentRoute=='dashboard'}">
+        <router-link to="/category" class="flex justify-center items-center" :class="{'text-green-700':currentRoute=='category'}">
           <font-awesome-icon icon="fa-solid fa-book" class="text-lg" />
           <p class="ml-1">Categories</p>
 

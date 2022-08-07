@@ -1,0 +1,47 @@
+<template>
+    <div>
+        <transition name="fade" mode="out-in">
+            <FlashMessage message="loading..." v-if="loading && !books.length" key="loading" />
+            <div class="grid grid-cols-2 gap-3 auto-rows-fr p-2">
+                <div class="p-3 flex justify-center items-center box-decoration-slice bg-gradient-to-r from-blue-400 to-green-500 text-white" v-for="category in all_categories" :key="category.id">
+
+                    <span>{{ category.name }}</span>
+                </div>
+            </div>
+        </transition>
+        <transition name="fade">
+            <FlashMessage :error="error" v-if="error" key="error" />
+        </transition>
+
+
+    </div>
+</template>
+
+<script>
+import { mapGetters } from "vuex";
+import FlashMessage from "@/components/FlashMessage";
+
+
+export default {
+    name: "Categories",
+    components: { FlashMessage },
+
+    computed: {
+        ...mapGetters(
+            "category", [
+            "loading", "error",
+            "all_categories",
+        ])
+    },
+    created() {
+        this.$store.dispatch("category/getAllCategories");
+    },
+    watch: {
+
+    },
+    methods: {
+
+    }
+
+};
+</script>
