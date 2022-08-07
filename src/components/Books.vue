@@ -76,5 +76,14 @@ export default {
     this.$store.dispatch("book/getBooks", currentPage);
     this.$store.dispatch("book/getRecommendedBooks", currentRecommendedPage);
   },
+  watch: {
+    recommended_books() {
+        if (this.recommended_books.length <= 0) {
+          this.$router.push("/update-category");
+    
+      }
+    }
+  }
+
 };
 </script>

@@ -4,6 +4,7 @@ import VueRouter from "vue-router";
 import auth from "@/middleware/auth";
 import admin from "@/middleware/admin";
 import guest from "@/middleware/guest";
+
 import middlewarePipeline from "@/router/middlewarePipeline";
 
 Vue.use(VueRouter);

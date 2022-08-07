@@ -2,7 +2,7 @@
   <div>
     <FlashMessage :error="error" />
     <div class="grid grid-cols-2 gap-2 p-3 auto-rows-fr">
-      <div :class="{ 'bg-blue-200': selected_categories.includes(category) }"
+      <div :class="{ 'bg-blue-200 text-blue-500': selected_categories.includes(category) }"
         class="p-2 rounded-sm cursor-pointer flex relative items-center max-w-sm bg-white border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700"
         v-for="category in all_categories" :key="category.id" @click="toggleClickedCategory(category)">
         <font-awesome-icon v-if="selected_categories.includes(category)" icon="fa-solid fa-check-circle"
@@ -11,7 +11,9 @@
       </div>
     </div>
 
-    <button @click="updateUserCategories">Update</button>
+    <div class="flex p-3 justify-end" v-if="!loading">
+      <button @click="updateUserCategories" class="bg-blue-500 rounded-sm text-white p-1 pr-5 pl-5">Confirm</button>
+    </div>
   </div>
 </template>
 
@@ -38,8 +40,6 @@ export default {
   },
   watch: {
     all_and_user_categories() {
-      console.log("u:", this.user_categories.map(f => f.id));
-      console.log("all:", this.all_categories.map(f => f.id));
       this.selected_categories = this.all_categories.filter(category => this.user_categories.map(u => u.id).includes(category.id));
     }
   },
