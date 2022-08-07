@@ -4,17 +4,12 @@
       <FlashMessage message="loading..." v-if="loading && !books.length" key="loading" />
       <div>
         <div class="flex flex-nowrap text-center sticky top-0 bg-white">
-          <div class="flex-1 border-b-2 border-blue-400 pt-3 pb-3">
+          <div v-for="language in all_languages" :key="language.id" class="flex-1 border-b-2 border-blue-400 pt-3 pb-3">
             <span class="box-decoration-slice bg-gradient-to-r from-indigo-600 to-green-500 text-white px-2 ...">
-              Myanmar
-              Books
+              {{language.name}}
             </span>
           </div>
-          <div class="flex-1 pt-3 pb-3"><span
-              class="box-decoration-slice bg-gradient-to-r from-indigo-600 to-red-500 text-white px-2 ...">
-              English
-              Books
-            </span></div>
+       
         </div>
         <div class="p-3">
           <div class="flex justify-between mt-5 mb-2">
@@ -64,23 +59,26 @@ export default {
   name: "Books",
   components: { FlashMessage, BasePagination, Book },
   computed: {
-    ...mapGetters("book", [
+    ...mapGetters(
+      "book", [
       "loading", "error",
       "books", "meta", "links",
       "recommended_books", "recommended_meta", "recommended_links"
     ]),
+    ...mapGetters("language",["all_languages"])
   },
   created() {
     const currentPage = 1;
     const currentRecommendedPage = 1
+    this.$store.dispatch("language/getLanguages");
     this.$store.dispatch("book/getBooks", currentPage);
     this.$store.dispatch("book/getRecommendedBooks", currentRecommendedPage);
   },
   watch: {
     recommended_books() {
-        if (this.recommended_books.length <= 0) {
-          this.$router.push("/update-category");
-    
+      if (this.recommended_books.length <= 0) {
+        this.$router.push("/update-category");
+
       }
     }
   }

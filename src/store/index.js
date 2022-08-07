@@ -6,6 +6,7 @@ import * as user from "@/store/modules/User";
 import * as message from "@/store/modules/Message";
 import * as book from "@/store/modules/Book";
 import * as category from "@/store/modules/Category";
+import * as language from "@/store/modules/Language";
 
 Vue.use(Vuex);
 
@@ -17,6 +18,7 @@ export default new Vuex.Store({
     user,
     message,
     book,
-    category
+    category,
+    language
   },
 });
