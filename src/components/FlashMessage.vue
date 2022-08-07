@@ -1,6 +1,7 @@
 <template>
   <div>
     <transition-group name="fade">
+    <p>{{error}}</p>
       <p v-if="message" class="mt-2 text-sm text-green-500" key="message">
         {{ message }}
       </p>

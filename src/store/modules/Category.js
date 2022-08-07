@@ -14,8 +14,8 @@ function setAllCategories(commit, response) {
 
 export const state = {
     user_categories: [],
-    initial_selected_categories:[],
-    all_categories:[],
+    initial_selected_categories: [],
+    all_categories: [],
     loading: false,
     error: null,
 };
@@ -49,7 +49,7 @@ export const actions = {
             });
 
     }
-    ,getAllCategories({ commit }) {
+    , getAllCategories({ commit }) {
         commit("SET_LOADING", true);
         CategoryService.getAllCategories()
             .then((response) => {
@@ -60,6 +60,9 @@ export const actions = {
                 commit("SET_ERROR", getError(error));
             });
 
+    },
+    setError({ commit },message) {
+        commit("SET_ERROR",message)
     }
 };
 
