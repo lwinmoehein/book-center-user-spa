@@ -61,7 +61,7 @@ export default {
   components: { FlashMessage, BasePagination, Book },
   data() {
     return {
-      selectedLanguage: 3,
+      selectedLanguages: new Set([1]),
       currentPage: 1,
       currentRecommendedPage: 1
     }
@@ -90,15 +90,17 @@ export default {
   },
   methods: {
     onLanguageTabClicked(language) {
-      this.selectedLanguage = language.id;
+      this.selectedLanguages.clear();
+      this.selectedLanguages.add(language.id);
       this.updateTopBooks();
+      this.updateRecommendedBooks();
     },
     updateTopBooks() {
-      this.$store.dispatch("book/getBooks", { page: this.currentPage, language: this.selectedLanguage });
+      this.$store.dispatch("book/getBooks", { page: this.currentPage, languages: Array.from(this.selectedLanguages) });
 
     },
     updateRecommendedBooks() {
-      this.$store.dispatch("book/getRecommendedBooks", this.currentRecommendedPage);
+      this.$store.dispatch("book/getRecommendedBooks",  { page: this.currentRecommendedPage, languages: Array.from(this.selectedLanguages) });
 
     }
   }

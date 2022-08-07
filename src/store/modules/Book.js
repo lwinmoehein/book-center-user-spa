@@ -58,7 +58,7 @@ export const mutations = {
 export const actions = {
   getBooks({ commit }, payload) {
     commit("SET_LOADING", true);
-    BookService.getBooks(payload.page,payload.language)
+    BookService.getBooks(payload)
       .then((response) => {
         setPaginatedBooks(commit, response);
       })
@@ -67,9 +67,9 @@ export const actions = {
         commit("SET_ERROR", getError(error));
       });
   },
-  getRecommendedBooks({ commit }, page) {
+  getRecommendedBooks({ commit }, payload) {
     commit("SET_LOADING", true);
-    BookService.getRecommendedBooks(page)
+    BookService.getRecommendedBooks(payload)
       .then((response) => {
         setPaginatedRecommendedBooks(commit, response);
       })

@@ -1,11 +1,11 @@
 import * as API from "@/services/API";
 
 export default {
-  getBooks(page,language) {
-    return API.apiClient.get(`/books/?page=${page}&language=${language}`);
+  getBooks(payload) {
+    return API.apiClient.get(`/books/?page=${payload.page}&languages=${payload.languages}`);
   },
-  getRecommendedBooks(page) {
-    return API.apiClient.get(`/books/category/?page=${page}`);
+  getRecommendedBooks(payload) {
+    return API.apiClient.get(`/books/category/?page=${payload.page}&languages=${payload.languages}`);
   },
   postBook(payload) {
     return API.apiClient.post("/books", payload);
