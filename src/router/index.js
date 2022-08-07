@@ -23,6 +23,14 @@ const routes = [
       import(/* webpackChunkName: "dashboard" */ "../views/Dashboard"),
   },
   {
+    path: "/update-category",
+    name: "updateCategory",
+    meta: { middleware: [auth] },
+
+    component: () =>
+      import(/* webpackChunkName: "not-found" */ "../views/SelectCategory"),
+  },
+  {
     path: "/user",
     name: "user",
     meta: { middleware: [auth] },
