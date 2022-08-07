@@ -15,9 +15,10 @@ import { faCheckCircle } from '@fortawesome/free-solid-svg-icons'
 import { faHouse } from '@fortawesome/free-solid-svg-icons'
 import { faGears } from '@fortawesome/free-solid-svg-icons'
 import { faBook } from '@fortawesome/free-solid-svg-icons'
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 
 
-library.add(faArrowRight,faCheckCircle,faHouse,faGears,faBook)
+library.add(faArrowRight,faCheckCircle,faHouse,faGears,faBook,faArrowLeft)
 
 /* add font awesome icon component */
 Vue.component('font-awesome-icon', FontAwesomeIcon)

@@ -9,7 +9,7 @@
       </div>
       <div class="flex-1 flex  justify-center">
 
-        <router-link to="/category" class="flex justify-center items-center" :class="{'text-green-700':currentRoute=='category'}">
+        <router-link to="/category" class="flex justify-center items-center" :class="{'text-green-700':isCategories}">
           <font-awesome-icon icon="fa-solid fa-book" class="text-lg" />
           <p class="ml-1">Categories</p>
 
@@ -38,6 +38,10 @@ export default {
     ...mapGetters("auth", ["authUser", "isAdmin"]),
     currentRoute(){
       return this.$route.name;
+    },
+    isCategories(){
+      let route = this.$route.name;
+      return /^categor.*/.test(route)
     }
   },
 };

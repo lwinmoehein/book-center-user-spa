@@ -4,6 +4,9 @@ export default {
   getAllCategories(page) {
     return API.apiClient.get(`/categories/?page=${page}`);
   },
+  getCategory(id) {
+    return API.apiClient.get(`/categories/${id}`);
+  },
   getUserCategories() {
     return API.apiClient.get(`/user-categories`);
   },

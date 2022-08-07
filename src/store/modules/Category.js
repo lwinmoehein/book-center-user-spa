@@ -11,11 +11,15 @@ function setAllCategories(commit, response) {
     commit("SET_ALL_CATEGORIES", response.data.data);
     commit("SET_LOADING", false);
 }
-
+function setSelectedCategory(commit,response){
+    commit("SET_SELECTED_CATEGORY", response.data.data);
+    commit("SET_LOADING", false);
+}
 export const state = {
     user_categories: [],
     initial_selected_categories: [],
     all_categories: [],
+    selected_category:null,
     loading: false,
     error: null,
 };
@@ -27,6 +31,9 @@ export const mutations = {
     },
     SET_ALL_CATEGORIES(state, categories) {
         state.all_categories = categories;
+    },
+    SET_SELECTED_CATEGORY(state, category) {
+        state.selected_category = category;
     },
     SET_LOADING(state, loading) {
         state.loading = loading;
@@ -61,6 +68,18 @@ export const actions = {
             });
 
     },
+    getCategory({ commit },categoryId) {
+        commit("SET_LOADING", true);
+        CategoryService.getCategory(categoryId)
+            .then((response) => {
+                setSelectedCategory(commit, response);
+            })
+            .catch((error) => {
+                commit("SET_LOADING", false);
+                commit("SET_ERROR", getError(error));
+            });
+
+    },
     setError({ commit },message) {
         commit("SET_ERROR",message)
     }
@@ -72,6 +91,9 @@ export const getters = {
     },
     all_categories: (state) => {
         return state.all_categories;
+    },
+    selected_category: (state) => {
+        return state.selected_category;
     },
     loading: (state) => {
         return state.loading;
