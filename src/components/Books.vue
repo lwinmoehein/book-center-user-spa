@@ -19,7 +19,7 @@
           </div>
 
           <div class="flex flex-row overflow-scroll h-52 gap-3 bg-scroll">
-            <Book v-for="book in books" :key="book.id" :book="book"></Book>
+            <Book class="w-24" v-for="book in books" :key="book.id" :book="book"></Book>
           </div>
         </div>
         <div class="p-3">
@@ -33,7 +33,7 @@
             <font-awesome-icon icon="fa-solid fa-arrow-right" />
           </div>
           <div class="flex flex-row overflow-scroll h-52 gap-3">
-            <Book v-for="book in recommended_books" :key="book.id" :book="book"></Book>
+            <Book class="w-24" v-for="book in recommended_books" :key="book.id" :book="book"></Book>
           </div>
         </div>
       </div>

@@ -1,13 +1,13 @@
 <template>
     <div>
-        <transition name="fade" mode="out-in">
+        <transition name="fade" mode="out-in" v-if="!loading">
             <div class="p-5">
                 <div class="flex mb-5">
                     <font-awesome-icon @click="goBack" icon="fa-solid fa-arrow-left" class="font-bold text-xl mr-3" />
                     <div> {{ selected_category.name }} </div>
                 </div>
-                <div class="grid grid-cols-3 gap-4">
-                    <Book v-for="book in selected_category.books" :key="book.id" :book="book"></Book>
+                <div class="grid grid-cols-2 gap-4">
+                    <Book class="" v-for="book in selected_category.books" :key="book.id" :book="book"></Book>
                 </div>
             </div>
         </transition>
