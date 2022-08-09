@@ -1,7 +1,7 @@
 <template>
   <div>
     <transition name="fade" mode="out-in">
-      <FlashMessage message="loading..." v-if="loading && !books.length" key="loading" />
+      <FlashMessage message="loading..." v-if="loading && !isTopBooksFetching && !books.length" key="loading" />
       <div>
         <div class="flex flex-nowrap text-center overflow-scroll sticky top-0 bg-white">
           <div @click="onLanguageTabClicked(language)" v-for="language in all_languages" :key="language.id"
@@ -12,30 +12,37 @@
           </div>
 
         </div>
+
         <div class="p-3">
           <div class="flex justify-between mt-5 mb-2">
             <div class="font-bold">Popular Books</div>
             <font-awesome-icon icon="fa-solid fa-arrow-right" />
           </div>
 
-          <div class="flex flex-row overflow-scroll h-52 gap-3 bg-scroll">
+          <div class="flex flex-row overflow-scroll h-48 gap-3 bg-scroll" :class="{ 'animate-pulse': isTopBooksFetching }"
+            ref="topBookScroller" @scroll="onPopularBooksScroll">
             <Book class="w-24" v-for="book in books" :key="book.id" :book="book"></Book>
+            <div class="pr-6 pl-6 flex items-center justify-center">
+              <div class="mb-10 text-blue-500">
+              No More Books
+              </div>
+            </div>
           </div>
+
+
         </div>
         <div class="p-3">
-          <transition name="fade">
-            <BasePagination :meta="meta" :links="links" action="book/paginateBooks" v-if="meta && meta.last_page > 1" />
-          </transition>
           <div class="flex justify-between mt-5 mb-2">
             <div class="font-bold">
               Recommended Books
             </div>
             <font-awesome-icon icon="fa-solid fa-arrow-right" />
           </div>
-          <div class="flex flex-row overflow-scroll h-52 gap-3">
+          <div class="flex flex-row overflow-scroll h-1/2 gap-3">
             <Book class="w-24" v-for="book in recommended_books" :key="book.id" :book="book"></Book>
           </div>
         </div>
+
       </div>
     </transition>
     <transition name="fade">
@@ -56,6 +63,7 @@ import BasePagination from "@/components/BasePagination";
 
 import Book from '@/components/Book';
 
+
 export default {
   name: "Books",
   components: { FlashMessage, BasePagination, Book },
@@ -63,7 +71,8 @@ export default {
     return {
       selectedLanguages: new Set([1]),
       currentPage: 1,
-      currentRecommendedPage: 1
+      currentRecommendedPage: 1,
+      isTopBooksFetching: false
     }
   },
   computed: {
@@ -86,6 +95,9 @@ export default {
         this.$router.push("/update-category");
 
       }
+    },
+    loading() {
+      this.isTopBooksFetching = this.loading;
     }
   },
   methods: {
@@ -100,7 +112,26 @@ export default {
 
     },
     updateRecommendedBooks() {
-      this.$store.dispatch("book/getRecommendedBooks",  { page: this.currentRecommendedPage, languages: Array.from(this.selectedLanguages) });
+      this.$store.dispatch("book/getRecommendedBooks", { page: this.currentRecommendedPage, languages: Array.from(this.selectedLanguages) });
+
+    },
+    onPopularBooksScroll() {
+      if (this.isTopBooksFetching) {
+        console.log("quitting");
+        return;
+      };
+      let topBooksScroller = this.$refs.topBookScroller;
+      if (topBooksScroller.scrollWidth - 30 <= (topBooksScroller.scrollLeft + topBooksScroller.offsetWidth)) {
+        this.currentPage = this.currentPage + 1;
+
+        if (this.currentPage >= this.meta.last_page) {
+          console.log("quit");
+          return;
+        }
+        this.isTopBooksFetching = true;
+        this.updateTopBooks();
+        console.log("fetching");
+      }
 
     }
   }

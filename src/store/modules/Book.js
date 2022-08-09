@@ -30,8 +30,11 @@ export const state = {
 export const mutations = {
 
   SET_BOOKS(state, books) {
-    state.books = books;
+      books.forEach(element => {
+        state.books.push(element);
+      });
   },
+ 
   SET_RECOMMENDED_BOOKS(state, recommended_books) {
     state.recommended_books = recommended_books;
   },

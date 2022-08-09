@@ -7,7 +7,7 @@
                     <div> {{ selected_category.name }} </div>
                 </div>
                 <div class="grid grid-cols-2 gap-4">
-                    <Book class="" v-for="book in selected_category.books" :key="book.id" :book="book"></Book>
+                    <Book class="h-full" v-for="book in selected_category.books" :key="book.id" :book="book"></Book>
                 </div>
             </div>
         </transition>
