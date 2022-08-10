@@ -32,7 +32,7 @@
               </div>
             </div>
           </div>
-          <div v-if="!loading && recommended_books.length<=0" class="h-52 flex justify-center items-center">
+          <div v-if="!loading && books.length <= 0" class="h-52 flex justify-center items-center">
             <div class="text-blue-500">
               No Books Found!
             </div>
@@ -47,7 +47,8 @@
             </div>
             <font-awesome-icon icon="fa-solid fa-arrow-right" />
           </div>
-          <div v-if="recommended_books.length>0" class="flex flex-row overflow-scroll h-52 gap-3 bg-scroll scrollbar-hide"
+          <div v-if="recommended_books.length > 0"
+            class="flex flex-row overflow-scroll h-52 gap-3 bg-scroll scrollbar-hide"
             :class="{ 'animate-pulse': isRecommendedBooksFetching }" ref="recommendedBookScroller"
             @scroll="onRecommendedBooksScroll">
             <Book class="w-24" v-for="book in recommended_books" :key="book.id" :book="book"></Book>
@@ -57,7 +58,7 @@
               </div>
             </div>
           </div>
-          <div v-if="!loading && recommended_books.length<=0" class="h-52 flex justify-center items-center">
+          <div v-if="!loading && recommended_books.length <= 0" class="h-52 flex justify-center items-center">
             <div class="text-blue-500">
               No Books Found!
             </div>
@@ -101,21 +102,32 @@ export default {
 
   },
   created() {
+    this.getAuthInfoAndReroute();
     this.$store.dispatch("language/getLanguages");
     this.updateTopBooks();
     this.updateRecommendedBooks();
   },
   watch: {
-    authUser() {
-      if (this.categories_count <= 0) {
-        this.$router.push("/update-category");
-      }
-    },
     loading() {
       this.isTopBooksFetching = this.isRecommendedBooksFetching = this.loading;
     }
   },
   methods: {
+    async getAuthInfoAndReroute() {
+      const authUser = await this.$store.dispatch("auth/getAuthUser");
+      if (authUser) {
+        if (authUser.categories_count == 0) {
+          console.log("updating");
+          this.$router.push("/update-category");
+        }
+      } else {
+        const error = Error(
+          "Unable to fetch user after login, check your API settings."
+        );
+        error.name = "Fetch User";
+        throw error;
+      }
+    },
     onLanguageTabClicked(language) {
       this.currentPage = 1;
       this.currentRecommendedPage = 1;
