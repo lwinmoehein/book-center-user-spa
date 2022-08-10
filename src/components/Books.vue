@@ -1,14 +1,13 @@
 <template>
-  <div>
-    <transition name="fade" mode="out-in">
-      <FlashMessage message="loading..." v-if="loading && !isTopBooksFetching && !books.length" key="loading" />
+  <transition name="fade" mode="out-in">
+    <div>
       <div>
         <div
           class="flex flex-nowrap text-center overflow-scroll sticky top-0 bg-white border-b-2 gap-5 border-gray-300 scrollbar-hide">
           <div @click="onLanguageTabClicked(language)" v-for="language in all_languages" :key="language.id"
             class="focus-within:pt-3 flex-grow w-20 flex-none cursor-pointer flex justify-center">
             <div class="border-b-2 pl-2 pr-2 font-bold"
-              :class="{ 'border-blue-400 text-blue-600': selectedLanguages.has(language.id) }">
+              :class="{ 'border-blue-400 text-blue-600': current_tab == language.id }">
               {{ language.name }}
             </div>
 
@@ -24,10 +23,11 @@
 
           <div v-if="books.length > 0" class="flex flex-row overflow-scroll h-52 gap-3 bg-scroll scrollbar-hide"
             :class="{ 'animate-pulse': isTopBooksFetching }" ref="topBookScroller" @scroll="onPopularBooksScroll">
-            <Book class="w-24" v-for="book in books" :key="book.id" :book="book" @click.native="onBookClicked(book)"></Book>
+            <Book class="w-24" v-for="book in books" :key="book.id" :book="book" @on-book-clicked="onBookClicked(book)">
+            </Book>
             <div class="pr-6 pl-6 flex items-center justify-center">
               <div class="mb-10 text-blue-500"
-                v-if="this.currentPage >= meta.last_page && !isTopBooksFetching && books.length > 0">
+                v-if="this.current_top_page >= meta.last_page && !isTopBooksFetching && books.length > 0">
                 No More Books!
               </div>
             </div>
@@ -51,9 +51,9 @@
             class="flex flex-row overflow-scroll h-52 gap-3 bg-scroll scrollbar-hide"
             :class="{ 'animate-pulse': isRecommendedBooksFetching }" ref="recommendedBookScroller"
             @scroll="onRecommendedBooksScroll">
-            <Book class="w-24" v-for="book in recommended_books" :key="book.id" :book="book"></Book>
+            <Book class="w-24" v-for="book in recommended_books" :key="'rec' + book.id" :book="book"></Book>
             <div class="pr-6 pl-6 flex items-center justify-center">
-              <div class="mb-10 text-blue-500" v-if="this.currentRecommendedPage == recommended_meta.last_page">
+              <div class="mb-10 text-blue-500" v-if="this.current_recommended_page == recommended_meta.last_page">
                 No More Books
               </div>
             </div>
@@ -66,8 +66,9 @@
         </div>
 
       </div>
-    </transition>
-  </div>
+    </div>
+  </transition>
+
 </template>
 
 <script>
@@ -82,12 +83,8 @@ export default {
   components: { FlashMessage, Book },
   data() {
     return {
-      selectedLanguages: new Set([1]),
-      currentPage: 1,
-      currentRecommendedPage: 1,
       isTopBooksFetching: false,
       isRecommendedBooksFetching: false
-
     }
   },
   computed: {
@@ -95,6 +92,7 @@ export default {
       "book", [
       "loading", "error",
       "books", "meta", "links",
+      "current_top_page", "current_recommended_page", "current_tab",
       "recommended_books", "recommended_meta", "recommended_links"
     ]),
     ...mapGetters("language", ["all_languages"]),
@@ -102,6 +100,8 @@ export default {
 
   },
   created() {
+    if (this.books.length > 0) return;
+
     this.getAuthInfoAndReroute();
     this.$store.dispatch("language/getLanguages");
     this.updateTopBooks();
@@ -109,7 +109,8 @@ export default {
   },
   watch: {
     loading() {
-      this.isTopBooksFetching = this.isRecommendedBooksFetching = this.loading;
+      if (!this.loading)
+        this.isTopBooksFetching = this.isRecommendedBooksFetching = false;
     }
   },
   methods: {
@@ -129,18 +130,19 @@ export default {
       }
     },
     onLanguageTabClicked(language) {
-      this.currentPage = 1;
-      this.currentRecommendedPage = 1;
-      this.selectedLanguages.clear();
-      this.selectedLanguages.add(language.id);
+      this.$store.dispatch("book/setCurrentTab", language.id);
+      this.$store.dispatch("book/setCurrentTopPage", 1);
+      this.$store.dispatch("book/setCurrentRecommendedPage", 1);
+
+
       this.updateTopBooks(false);
       this.updateRecommendedBooks(false);
     },
     updateTopBooks(isPaginated = true) {
-      this.$store.dispatch("book/getBooks", { page: this.currentPage, languages: Array.from(this.selectedLanguages), isPaginated: isPaginated });
+      this.$store.dispatch("book/getBooks", { page: this.current_top_page, languages: [this.current_tab], isPaginated: isPaginated });
     },
     updateRecommendedBooks(isPaginated = true) {
-      this.$store.dispatch("book/getRecommendedBooks", { page: this.currentRecommendedPage, languages: Array.from(this.selectedLanguages), isPaginated: isPaginated });
+      this.$store.dispatch("book/getRecommendedBooks", { page: this.current_recommended_page, languages: [this.current_tab], isPaginated: isPaginated });
 
     },
     onPopularBooksScroll() {
@@ -150,10 +152,10 @@ export default {
       let topBooksScroller = this.$refs.topBookScroller;
       if (topBooksScroller.scrollWidth - 30 <= (topBooksScroller.scrollLeft + topBooksScroller.offsetWidth)) {
 
-        if (this.currentPage >= this.meta.last_page) {
+        if (this.current_top_page >= this.meta.last_page) {
           return;
         }
-        this.currentPage = this.currentPage + 1;
+        this.$store.dispatch("book/setCurrentTopPage", this.current_top_page + 1)
 
         this.isTopBooksFetching = true;
         this.updateTopBooks();
@@ -167,10 +169,10 @@ export default {
       let recommendedBooksScroller = this.$refs.recommendedBookScroller;
       if (recommendedBooksScroller.scrollWidth - 30 <= (recommendedBooksScroller.scrollLeft + recommendedBooksScroller.offsetWidth)) {
 
-        if (this.currentRecommendedPage >= this.recommended_meta.last_page) {
+        if (this.current_recommended_page >= this.recommended_meta.last_page) {
           return;
         }
-        this.currentRecommendedPage = this.currentRecommendedPage + 1;
+        this.$store.dispatch("book/setCurrentRecommendedPage", this.current_recommended_page + 1)
 
         this.isRecommendedBooksFetching = true;
         this.updateRecommendedBooks();
@@ -184,6 +186,5 @@ export default {
       });
     }
   }
-
 };
 </script>

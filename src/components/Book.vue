@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-none  flex-col">
+    <div class="flex flex-none  flex-col" @click="$emit('on-book-clicked',book)">
         <img class="h-3/5 rounded-md object-cover flex-none" :src="book.cover_url" alt="">
         <div>{{ book.title.substring(0, 20) }}</div>
         <div>{{ book.price }}</div>

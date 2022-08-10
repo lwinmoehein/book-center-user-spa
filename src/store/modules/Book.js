@@ -31,6 +31,7 @@ function setPaginatedRecommendedBooks(commit, response) {
   commit("SET_LOADING", false);
 }
 
+
 export const state = {
   books: [],
   meta: null,
@@ -40,6 +41,9 @@ export const state = {
   recommended_links: null,
   loading: false,
   error: null,
+  current_top_page: 1,
+  current_recommended_page: 1,
+  current_tab: 1
 };
 
 export const mutations = {
@@ -65,6 +69,15 @@ export const mutations = {
   },
   SET_RECOMMENDED_LINKS(state, recommended_links) {
     state.recommended_links = recommended_links;
+  },
+  SET_CURRENT_TOP_PAGE(state, page) {
+    state.current_top_page = page;
+  },
+  SET_CURRENT_RECOMMENDED_PAGE(state, page) {
+    state.current_recommended_page = page;
+  },
+  SET_CURRENT_TAB(state, tab) {
+    state.current_tab = tab;
   },
   SET_META(state, meta) {
     state.meta = meta;
@@ -136,6 +149,15 @@ export const actions = {
         commit("SET_ERROR", getError(error));
       });
   },
+  setCurrentTopPage({ commit }, page) {
+    commit("SET_CURRENT_TOP_PAGE", page);
+  },
+  setCurrentRecommendedPage({ commit }, page) {
+    commit("SET_CURRENT_RECOMMENDED_PAGE", page);
+  },
+  setCurrentTab({ commit }, tab) {
+    commit("SET_CURRENT_TAB", tab);
+  },
 
 };
 
@@ -145,6 +167,15 @@ export const getters = {
   },
   meta: (state) => {
     return state.meta;
+  },
+  current_top_page: (state) => {
+    return state.current_top_page;
+  },
+  current_recommended_page: (state) => {
+    return state.current_recommended_page;
+  },
+  current_tab: (state) => {
+    return state.current_tab;
   },
   links: (state) => {
     return state.links;

@@ -32,7 +32,7 @@ export default {
         ])
     },
     created() {
-        this.$store.dispatch("bookDetail/getBook", 1);
+        this.$store.dispatch("bookDetail/getBook", this.$route.params.id);
     },
     watch: {
 
@@ -41,7 +41,10 @@ export default {
         goBack() {
             this.$router.replace({ path: '/dashboard' });
         }
-    }
+    },
+    unmounted() {
+        this.$store.dispatch("bookDetail/setBookValue", null);
+    },
 
 };
 </script>

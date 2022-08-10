@@ -9,7 +9,7 @@ function setBook(commit, response) {
 }
 
 export const state = {
-    book:null,
+    book: null,
     loading: false,
     error: null,
 };
@@ -28,9 +28,9 @@ export const mutations = {
 };
 
 export const actions = {
-    getBook({ commit },id) {
+    getBook({ commit }, id) {
         commit("SET_LOADING", true);
-        BookService.getBook({id:id})
+        BookService.getBook({ id: id })
             .then((response) => {
                 setBook(commit, response);
             })
@@ -40,8 +40,20 @@ export const actions = {
             });
 
     },
-    setError({ commit },message) {
-        commit("SET_ERROR",message)
+    setBookValue({ commit }, book) {
+        commit("SET_LOADING", true);
+        try {
+            setBook(commit, book)
+        } catch {
+            (error) => {
+                commit("SET_LOADING", false);
+                commit("SET_ERROR", getError(error));
+            }
+        }
+
+    },
+    setError({ commit }, message) {
+        commit("SET_ERROR", message)
     }
 };
 
