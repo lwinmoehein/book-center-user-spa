@@ -19,12 +19,12 @@
             <font-awesome-icon icon="fa-solid fa-arrow-right" />
           </div>
 
-          <div class="flex flex-row overflow-scroll h-48 gap-3 bg-scroll" :class="{ 'animate-pulse': isTopBooksFetching }"
-            ref="topBookScroller" @scroll="onPopularBooksScroll">
+          <div class="flex flex-row overflow-scroll h-48 gap-3 bg-scroll scrollbar-hide"
+            :class="{ 'animate-pulse': isTopBooksFetching }" ref="topBookScroller" @scroll="onPopularBooksScroll">
             <Book class="w-24" v-for="book in books" :key="book.id" :book="book"></Book>
             <div class="pr-6 pl-6 flex items-center justify-center">
-              <div class="mb-10 text-blue-500">
-              No More Books
+              <div class="mb-10 text-blue-500" v-if="this.currentPage == meta.last_page">
+                No More Books
               </div>
             </div>
           </div>
@@ -38,20 +38,19 @@
             </div>
             <font-awesome-icon icon="fa-solid fa-arrow-right" />
           </div>
-          <div class="flex flex-row overflow-scroll h-1/2 gap-3">
+          <div class="flex flex-row overflow-scroll h-48 gap-3 bg-scroll scrollbar-hide"
+            :class="{ 'animate-pulse': isRecommendedBooksFetching }" ref="recommendedBookScroller"
+            @scroll="onRecommendedBooksScroll">
             <Book class="w-24" v-for="book in recommended_books" :key="book.id" :book="book"></Book>
+              <div class="pr-6 pl-6 flex items-center justify-center">
+              <div class="mb-10 text-blue-500" v-if="this.currentRecommendedPage == recommended_meta.last_page">
+                No More Books
+              </div>
+            </div>
           </div>
         </div>
 
       </div>
-    </transition>
-    <transition name="fade">
-      <FlashMessage :error="error" v-if="error" key="error" />
-    </transition>
-
-    <transition name="fade">
-      <BasePagination :meta="recommended_meta" :links="recommended_links" action="book/paginateRecommendedBooks"
-        v-if="recommended_meta && recommended_meta.last_page > 1" />
     </transition>
   </div>
 </template>
@@ -59,20 +58,21 @@
 <script>
 import { mapGetters } from "vuex";
 import FlashMessage from "@/components/FlashMessage";
-import BasePagination from "@/components/BasePagination";
 
 import Book from '@/components/Book';
 
 
 export default {
   name: "Books",
-  components: { FlashMessage, BasePagination, Book },
+  components: { FlashMessage, Book },
   data() {
     return {
       selectedLanguages: new Set([1]),
       currentPage: 1,
       currentRecommendedPage: 1,
-      isTopBooksFetching: false
+      isTopBooksFetching: false,
+      isRecommendedBooksFetching: false
+
     }
   },
   computed: {
@@ -97,7 +97,7 @@ export default {
       }
     },
     loading() {
-      this.isTopBooksFetching = this.loading;
+      this.isTopBooksFetching = this.isRecommendedBooksFetching = this.loading;
     }
   },
   methods: {
@@ -117,20 +117,35 @@ export default {
     },
     onPopularBooksScroll() {
       if (this.isTopBooksFetching) {
-        console.log("quitting");
         return;
       };
       let topBooksScroller = this.$refs.topBookScroller;
       if (topBooksScroller.scrollWidth - 30 <= (topBooksScroller.scrollLeft + topBooksScroller.offsetWidth)) {
-        this.currentPage = this.currentPage + 1;
 
         if (this.currentPage >= this.meta.last_page) {
-          console.log("quit");
           return;
         }
+        this.currentPage = this.currentPage + 1;
+
         this.isTopBooksFetching = true;
         this.updateTopBooks();
-        console.log("fetching");
+      }
+
+    },
+    onRecommendedBooksScroll() {
+      if (this.isRecommendedBooksFetching) {
+        return;
+      };
+      let recommendedBooksScroller = this.$refs.recommendedBookScroller;
+      if (recommendedBooksScroller.scrollWidth - 30 <= (recommendedBooksScroller.scrollLeft + recommendedBooksScroller.offsetWidth)) {
+
+        if (this.currentRecommendedPage >= this.recommended_meta.last_page) {
+          return;
+        }
+        this.currentRecommendedPage = this.currentRecommendedPage + 1;
+
+        this.isRecommendedBooksFetching = true;
+        this.updateRecommendedBooks();
       }
 
     }

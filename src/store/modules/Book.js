@@ -36,7 +36,9 @@ export const mutations = {
   },
  
   SET_RECOMMENDED_BOOKS(state, recommended_books) {
-    state.recommended_books = recommended_books;
+    recommended_books.forEach(element => {
+      state.recommended_books.push(element);
+    });
   },
   SET_RECOMMENDED_META(state, recommended_meta) {
     state.recommended_meta = recommended_meta;
