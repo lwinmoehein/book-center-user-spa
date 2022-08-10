@@ -21,7 +21,7 @@
             <font-awesome-icon icon="fa-solid fa-arrow-right" />
           </div>
 
-          <div v-if="books.length > 0" class="flex flex-row overflow-scroll h-52 gap-3 bg-scroll scrollbar-hide"
+          <div v-if="books.length > 0" class="flex flex-row overflow-scroll h-60 gap-3 bg-scroll scrollbar-hide"
             :class="{ 'animate-pulse': isTopBooksFetching }" ref="topBookScroller" @scroll="onPopularBooksScroll">
             <Book class="w-24" v-for="book in books" :key="book.id" :book="book" @on-book-clicked="onBookClicked(book)">
             </Book>
@@ -48,7 +48,7 @@
             <font-awesome-icon icon="fa-solid fa-arrow-right" />
           </div>
           <div v-if="recommended_books.length > 0"
-            class="flex flex-row overflow-scroll h-52 gap-3 bg-scroll scrollbar-hide"
+            class="flex flex-row overflow-scroll h-60 gap-3 bg-scroll scrollbar-hide"
             :class="{ 'animate-pulse': isRecommendedBooksFetching }" ref="recommendedBookScroller"
             @scroll="onRecommendedBooksScroll">
             <Book class="w-24" v-for="book in recommended_books" :key="'rec' + book.id" :book="book"></Book>
@@ -73,14 +73,13 @@
 
 <script>
 import { mapGetters } from "vuex";
-import FlashMessage from "@/components/FlashMessage";
 
 import Book from '@/components/Book';
 
 
 export default {
   name: "Books",
-  components: { FlashMessage, Book },
+  components: { Book },
   data() {
     return {
       isTopBooksFetching: false,
