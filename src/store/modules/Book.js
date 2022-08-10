@@ -3,14 +3,29 @@ import BookService from "@/services/BookService";
 
 export const namespaced = true;
 
-function setPaginatedBooks(commit, response) {
+
+function setBooks(commit, response) {
   commit("SET_BOOKS", response.data.data);
   commit("SET_META", response.data.meta);
   commit("SET_LINKS", response.data.links);
   commit("SET_LOADING", false);
 }
-function setPaginatedRecommendedBooks(commit, response) {
+function setPaginatedBooks(commit, response) {
+  commit("SET_PAGINATED_BOOKS", response.data.data);
+  commit("SET_META", response.data.meta);
+  commit("SET_LINKS", response.data.links);
+  commit("SET_LOADING", false);
+}
+
+function setRecommendedBooks(commit, response) {
   commit("SET_RECOMMENDED_BOOKS", response.data.data);
+  commit("SET_META", response.data.meta);
+  commit("SET_LINKS", response.data.links);
+  commit("SET_LOADING", false);
+}
+
+function setPaginatedRecommendedBooks(commit, response) {
+  commit("SET_PAGINATED_RECOMMENDED_BOOKS", response.data.data);
   commit("SET_RECOMMENDED_META", response.data.meta);
   commit("SET_RECOMMENDED_LINKS", response.data.links);
   commit("SET_LOADING", false);
@@ -30,12 +45,17 @@ export const state = {
 export const mutations = {
 
   SET_BOOKS(state, books) {
-      books.forEach(element => {
-        state.books.push(element);
-      });
+    state.books = books;
   },
- 
+  SET_PAGINATED_BOOKS(state, books) {
+    books.forEach(element => {
+      state.books.push(element);
+    });
+  },
   SET_RECOMMENDED_BOOKS(state, recommended_books) {
+    state.recommended_books = recommended_books;
+  },
+  SET_PAGINATED_RECOMMENDED_BOOKS(state, recommended_books) {
     recommended_books.forEach(element => {
       state.recommended_books.push(element);
     });
@@ -65,7 +85,10 @@ export const actions = {
     commit("SET_LOADING", true);
     BookService.getBooks(payload)
       .then((response) => {
-        setPaginatedBooks(commit, response);
+        if (payload.isPaginated)
+          setPaginatedBooks(commit, response);
+        else
+          setBooks(commit, response);
       })
       .catch((error) => {
         commit("SET_LOADING", false);
@@ -76,7 +99,10 @@ export const actions = {
     commit("SET_LOADING", true);
     BookService.getRecommendedBooks(payload)
       .then((response) => {
-        setPaginatedRecommendedBooks(commit, response);
+        if (payload.isPaginated)
+          setPaginatedRecommendedBooks(commit, response);
+        else
+          setRecommendedBooks(commit, response);
       })
       .catch((error) => {
         commit("SET_LOADING", false);
@@ -110,7 +136,7 @@ export const actions = {
         commit("SET_ERROR", getError(error));
       });
   },
-  
+
 };
 
 export const getters = {

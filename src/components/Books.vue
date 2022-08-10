@@ -3,12 +3,15 @@
     <transition name="fade" mode="out-in">
       <FlashMessage message="loading..." v-if="loading && !isTopBooksFetching && !books.length" key="loading" />
       <div>
-        <div class="flex flex-nowrap text-center overflow-scroll sticky top-0 bg-white">
+        <div
+          class="flex flex-nowrap text-center overflow-scroll sticky top-0 bg-white border-b-2 gap-5 border-gray-300 scrollbar-hide">
           <div @click="onLanguageTabClicked(language)" v-for="language in all_languages" :key="language.id"
-            class="border-b-2 border-blue-400 pt-3 pb-3 w-32 flex-none cursor-pointer">
-            <span class="box-decoration-slice bg-gradient-to-r from-indigo-600 to-green-500 text-white px-2 ...">
+            class="focus-within:pt-3 flex-grow w-20 flex-none cursor-pointer flex justify-center">
+            <div class="border-b-2 pl-2 pr-2 font-bold"
+              :class="{ 'border-blue-400 text-blue-600': selectedLanguages.has(language.id) }">
               {{ language.name }}
-            </span>
+            </div>
+
           </div>
 
         </div>
@@ -19,13 +22,19 @@
             <font-awesome-icon icon="fa-solid fa-arrow-right" />
           </div>
 
-          <div class="flex flex-row overflow-scroll h-48 gap-3 bg-scroll scrollbar-hide"
+          <div v-if="books.length > 0" class="flex flex-row overflow-scroll h-52 gap-3 bg-scroll scrollbar-hide"
             :class="{ 'animate-pulse': isTopBooksFetching }" ref="topBookScroller" @scroll="onPopularBooksScroll">
             <Book class="w-24" v-for="book in books" :key="book.id" :book="book"></Book>
             <div class="pr-6 pl-6 flex items-center justify-center">
-              <div class="mb-10 text-blue-500" v-if="this.currentPage == meta.last_page">
-                No More Books
+              <div class="mb-10 text-blue-500"
+                v-if="this.currentPage >= meta.last_page && !isTopBooksFetching && books.length > 0">
+                No More Books!
               </div>
+            </div>
+          </div>
+          <div v-if="!loading && recommended_books.length<=0" class="h-52 flex justify-center items-center">
+            <div class="text-blue-500">
+              No Books Found!
             </div>
           </div>
 
@@ -38,14 +47,19 @@
             </div>
             <font-awesome-icon icon="fa-solid fa-arrow-right" />
           </div>
-          <div class="flex flex-row overflow-scroll h-48 gap-3 bg-scroll scrollbar-hide"
+          <div v-if="recommended_books.length>0" class="flex flex-row overflow-scroll h-52 gap-3 bg-scroll scrollbar-hide"
             :class="{ 'animate-pulse': isRecommendedBooksFetching }" ref="recommendedBookScroller"
             @scroll="onRecommendedBooksScroll">
             <Book class="w-24" v-for="book in recommended_books" :key="book.id" :book="book"></Book>
-              <div class="pr-6 pl-6 flex items-center justify-center">
+            <div class="pr-6 pl-6 flex items-center justify-center">
               <div class="mb-10 text-blue-500" v-if="this.currentRecommendedPage == recommended_meta.last_page">
                 No More Books
               </div>
+            </div>
+          </div>
+          <div v-if="!loading && recommended_books.length<=0" class="h-52 flex justify-center items-center">
+            <div class="text-blue-500">
+              No Books Found!
             </div>
           </div>
         </div>
@@ -82,7 +96,9 @@ export default {
       "books", "meta", "links",
       "recommended_books", "recommended_meta", "recommended_links"
     ]),
-    ...mapGetters("language", ["all_languages"])
+    ...mapGetters("language", ["all_languages"]),
+    ...mapGetters("auth", ["authUser"])
+
   },
   created() {
     this.$store.dispatch("language/getLanguages");
@@ -90,10 +106,9 @@ export default {
     this.updateRecommendedBooks();
   },
   watch: {
-    recommended_books() {
-      if (this.recommended_books.length <= 0) {
+    authUser() {
+      if (this.categories_count <= 0) {
         this.$router.push("/update-category");
-
       }
     },
     loading() {
@@ -102,17 +117,18 @@ export default {
   },
   methods: {
     onLanguageTabClicked(language) {
+      this.currentPage = 1;
+      this.currentRecommendedPage = 1;
       this.selectedLanguages.clear();
       this.selectedLanguages.add(language.id);
-      this.updateTopBooks();
-      this.updateRecommendedBooks();
+      this.updateTopBooks(false);
+      this.updateRecommendedBooks(false);
     },
-    updateTopBooks() {
-      this.$store.dispatch("book/getBooks", { page: this.currentPage, languages: Array.from(this.selectedLanguages) });
-
+    updateTopBooks(isPaginated = true) {
+      this.$store.dispatch("book/getBooks", { page: this.currentPage, languages: Array.from(this.selectedLanguages), isPaginated: isPaginated });
     },
-    updateRecommendedBooks() {
-      this.$store.dispatch("book/getRecommendedBooks", { page: this.currentRecommendedPage, languages: Array.from(this.selectedLanguages) });
+    updateRecommendedBooks(isPaginated = true) {
+      this.$store.dispatch("book/getRecommendedBooks", { page: this.currentRecommendedPage, languages: Array.from(this.selectedLanguages), isPaginated: isPaginated });
 
     },
     onPopularBooksScroll() {
