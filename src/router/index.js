@@ -38,6 +38,13 @@ const routes = [
       import(/* webpackChunkName: "dashboard" */ "../views/CategoryDetail"),
   },
   {
+    path: "/book-detail/:id",
+    name: "book-detail",
+    meta: { middleware: [auth] },
+    component: () =>
+      import(/* webpackChunkName: "dashboard" */ "../views/BookDetail"),
+  },
+  {
     path: "/update-category",
     name: "updateCategory",
     meta: { middleware: [auth] },

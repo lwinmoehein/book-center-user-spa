@@ -24,7 +24,7 @@
 
           <div v-if="books.length > 0" class="flex flex-row overflow-scroll h-52 gap-3 bg-scroll scrollbar-hide"
             :class="{ 'animate-pulse': isTopBooksFetching }" ref="topBookScroller" @scroll="onPopularBooksScroll">
-            <Book class="w-24" v-for="book in books" :key="book.id" :book="book"></Book>
+            <Book class="w-24" v-for="book in books" :key="book.id" :book="book" @click.native="onBookClicked(book)"></Book>
             <div class="pr-6 pl-6 flex items-center justify-center">
               <div class="mb-10 text-blue-500"
                 v-if="this.currentPage >= meta.last_page && !isTopBooksFetching && books.length > 0">
@@ -176,6 +176,12 @@ export default {
         this.updateRecommendedBooks();
       }
 
+    },
+    onBookClicked(book) {
+      this.$router.push({
+        name: "book-detail",
+        params: { id: book.id }
+      });
     }
   }
 

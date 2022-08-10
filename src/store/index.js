@@ -7,6 +7,7 @@ import * as message from "@/store/modules/Message";
 import * as book from "@/store/modules/Book";
 import * as category from "@/store/modules/Category";
 import * as language from "@/store/modules/Language";
+import * as bookDetail from "@/store/modules/BookDetail";
 
 Vue.use(Vuex);
 
@@ -19,6 +20,7 @@ export default new Vuex.Store({
     message,
     book,
     category,
-    language
+    language,
+    bookDetail
   },
 });

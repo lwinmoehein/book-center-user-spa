@@ -2,7 +2,7 @@
   <header class="p-5 text-white bg-blue-400 bottom-0 fixed left-0 right-0">
     <nav class="container flex items-center mx-auto">
       <div class="flex-1 flex  justify-center">
-        <router-link to="/dashboard" class="flex justify-center items-center" :class="{'text-green-700':currentRoute=='dashboard'}">
+        <router-link to="/dashboard" class="flex justify-center items-center" :class="{'text-green-700':isHome}">
           <font-awesome-icon icon="fa-solid fa-house" class="text-lg self-center" />
           <p class="ml-1">Home</p>
         </router-link>
@@ -42,6 +42,10 @@ export default {
     isCategories(){
       let route = this.$route.name;
       return /^categor.*/.test(route)
+    },
+     isHome(){
+      let route = this.$route.name;
+      return /^book.*|dashboard/.test(route)
     }
   },
 };
