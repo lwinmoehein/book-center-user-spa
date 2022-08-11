@@ -17,9 +17,11 @@ import { faGears } from '@fortawesome/free-solid-svg-icons'
 import { faBook } from '@fortawesome/free-solid-svg-icons'
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 import { faSpinner } from '@fortawesome/free-solid-svg-icons'
+import { faStar } from '@fortawesome/free-solid-svg-icons'
+import { faStarHalfStroke } from '@fortawesome/free-solid-svg-icons'
 
 
-library.add(faArrowRight,faCheckCircle,faHouse,faGears,faBook,faArrowLeft,faSpinner)
+library.add(faArrowRight, faCheckCircle, faHouse, faGears, faBook, faArrowLeft, faSpinner,faStarHalfStroke,faStar)
 
 /* add font awesome icon component */
 Vue.component('font-awesome-icon', FontAwesomeIcon)

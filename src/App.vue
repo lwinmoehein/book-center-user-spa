@@ -1,10 +1,9 @@
 <template>
   <div id="app">
-    <main class="container mx-auto">
+    <main class="container mx-auto mb-20">
       <router-view />
     </main>
     <Header v-if="isLoggedIn" />
-
   </div>
 </template>
 
