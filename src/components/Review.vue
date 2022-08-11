@@ -5,8 +5,7 @@
         <span class="font-bold">{{review.user.name}}</span>
         <div class="ml-2 flex items-center justify-center">
             <font-awesome-icon v-for="s in review.star" :key="'star'+s" icon="fa-solid fa-star" />
-            <font-awesome-icon v-for="i in 5-review.star"  icon="fa-solid fa-star-half-stroke" />
-
+            <font-awesome-icon v-for="s in 5-review.star" :key="review.id+'s'+s"  icon="fa-solid fa-star-half-stroke" />
         </div>
     </div>
     <div class="text-sm">

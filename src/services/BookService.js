@@ -16,4 +16,7 @@ export default {
   getBook(payload) {
     return API.apiClient.get(`/books/${payload.id}`);
   },
+  postReview(payload) {
+    return API.apiClient.post("/reviews", payload);
+  },
 };

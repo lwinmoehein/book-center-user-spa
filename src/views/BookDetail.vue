@@ -30,11 +30,7 @@
                     </div>
                 </div>
                 <div class="p-3">
-                    <div class="font-semibold mt-5 mb-2">Reviews:</div>
-
-                    <div class="flex flex-col">
-                        <Review v-for="review in book.reviews" :review="review" :key="'r'+review.id"/>
-                    </div>
+                    <Reviews :book="book"/>
                 </div>
             </div>
         </transition>
@@ -47,12 +43,12 @@
 <script>
 import { mapGetters } from "vuex";
 import FlashMessage from "@/components/FlashMessage";
-import Review from "@/components/Review";
+import Reviews from "@/components/Reviews";
 
 
 export default {
     name: "BookDetail",
-    components: { FlashMessage, Review },
+    components: { FlashMessage, Reviews },
 
     computed: {
         ...mapGetters(
