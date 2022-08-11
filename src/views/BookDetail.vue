@@ -2,7 +2,7 @@
     <div>
         <transition name="fade" mode="out-in">
             <div v-if="!loading && book != null" class="p-2">
-                <div class="flex mb-5">
+                <div class="flex mb-5 p-3">
                     <font-awesome-icon @click="goBack" icon="fa-solid fa-arrow-left" class="font-bold text-xl mr-3" />
                     <div> {{ book.title.substring(0, 30) }} </div>
                 </div>
