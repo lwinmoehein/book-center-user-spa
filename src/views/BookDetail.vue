@@ -29,6 +29,13 @@
                         <div class="bg-blue-400 pl-1 pr-1 flex-none rounded-md text-white" v-for="category in book.categories" :key="category.id">{{ category.name }}</div>
                     </div>
                 </div>
+                <div class="p-3">
+                    <div class="font-semibold mt-5 mb-2">Reviews:</div>
+
+                    <div class="flex flex-col">
+                        <Review v-for="review in book.reviews" :review="review" :key="'r'+review.id"/>
+                    </div>
+                </div>
             </div>
         </transition>
         <transition name="fade">
@@ -40,11 +47,12 @@
 <script>
 import { mapGetters } from "vuex";
 import FlashMessage from "@/components/FlashMessage";
+import Review from "@/components/Review";
 
 
 export default {
     name: "BookDetail",
-    components: { FlashMessage },
+    components: { FlashMessage, Review },
 
     computed: {
         ...mapGetters(
