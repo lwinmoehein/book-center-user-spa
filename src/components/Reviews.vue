@@ -1,6 +1,5 @@
 <template>
     <div>
-        <div class="font-semibold mt-5 mb-2">Reviews:</div>
         <ReviewInput :reviewText="reviewText" @on-review-input-clicked="postReview"/>
         <div class="flex flex-col">
             <Review v-for="review in book.reviews" :review="review" :key="'r'+review.id"/>
@@ -24,12 +23,9 @@ export default {
         }
     },
     methods: {
-        postReview(reviewText){
-             let review  = {
-                book_id:this.book.id,
-                star:4,
-                body:reviewText
-             };
+        postReview(review){
+             review.book_id = this.book.id;
+
              this.$store.dispatch("bookDetail/postReview",review );
         }
     },

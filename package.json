@@ -14,6 +14,7 @@
     "@fortawesome/vue-fontawesome": "^2.0.8",
     "axios": "^0.21.1",
     "core-js": "^3.15.2",
+    "flowbite": "^1.5.2",
     "lodash": "^4.17.21",
     "tailwind-scrollbar-hide": "^1.1.7",
     "vue": "^2.6.14",
