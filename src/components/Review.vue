@@ -7,13 +7,15 @@
                     class="text-blue-500" />
                 <font-awesome-icon v-for="s in 5 - review.star" :key="review.id + 's' + s" icon="fa-regular fa-star" />
             </div>
+            <font-awesome-icon icon="fa-solid fa-list-dots" />
         </div>
         <div class="text-sm text-gray-400">
             {{ review.created_at }}
         </div>
         <div class="mt-2">{{ review.body }}</div>
-        <ReviewDialog @on-review-confirm="onEditReviewClicked" :review="review" @on-dialog-close="isEditReviewDialogClosed=false"
-            :isClosed="isEditReviewDialogClosed" />
+        <ReviewDialog @on-review-confirm="onEditReviewConfirmed" :review="review"
+            @on-dialog-close="onCloseDialogClicked" :isClosed="isEditReviewDialogClosed"
+            v-if="review.user.id == authUser.id" />
     </div>
 </template>
 
@@ -41,16 +43,21 @@ export default {
     },
     methods: {
         onCloseDialogClicked() {
-            console.log("on close");
             this.isEditReviewDialogClosed = true;
         },
         onOpenDialogClicked() {
             this.isEditReviewDialogClosed = false;
         },
-        onEditReviewClicked() {
-
+        onEditReviewConfirmed(review) {
+            review.review_id = this.review.id;
+            this.$emit('on-review-update', review);
         }
     },
+    watch: {
+        isEditReviewDialogClosed() {
+            console.log(this.isEditReviewDialogClosed);
+        }
+    }
 
 };
 </script>

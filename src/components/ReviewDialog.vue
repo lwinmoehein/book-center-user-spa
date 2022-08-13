@@ -22,10 +22,10 @@
             </div>
             <div class="flex justify-end gap-4">
                 <!-- This button is used to close the dialog -->
-                <button @click="onCancelButtonClicked"
+                <button @click.stop="onCancelButtonClicked"
                     class="px-5 py-2 bg-gray-500 hover:bg-gray-700 text-white cursor-pointer rounded-md">
                     Cancel</button>
-                <button @click="onConfirmButtonClicked"
+                <button @click.stop="onConfirmButtonClicked"
                     class="px-7 py-2 bg-indigo-500 hover:bg-indigo-700 text-white cursor-pointer rounded-md">
                     {{ review ? "Edit Review" : "Post Review" }} Review</button>
             </div>

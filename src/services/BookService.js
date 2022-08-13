@@ -19,4 +19,7 @@ export default {
   postReview(payload) {
     return API.apiClient.post("/reviews", payload);
   },
+  updateReview(payload) {
+    return API.apiClient.patch(`/reviews/${payload.review_id}`, payload);
+  },
 };
