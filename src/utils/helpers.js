@@ -1,5 +1,5 @@
 export const getError = (error) => {
-  const errorMessage = "API Error, please try again.";
+  const errorMessage = "Error, please try again.";
 
   if (error.name === "Fetch User") {
     return error.message;

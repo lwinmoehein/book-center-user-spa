@@ -22,7 +22,7 @@
         Forgot your password?
       </router-link>
     </div>
-    <FlashMessage :error="error" />
+    <FlashMessage :error="error" :isLoggedIn="false" />
   </form>
 </template>
 

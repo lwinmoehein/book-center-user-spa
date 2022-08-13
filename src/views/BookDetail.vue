@@ -1,10 +1,11 @@
 <template>
     <div>
+    <FlashMessage :error="error" />
         <transition name="fade" mode="out-in">
             <div v-if="!loading && book != null" class="p-2">
                 <div class="flex mb-5 p-3">
                     <font-awesome-icon @click="goBack" icon="fa-solid fa-arrow-left" class="font-bold text-xl mr-3" />
-                    <div> {{ book.title.substring(0, 30) }} </div>
+                    <div class="font-semibold"> {{ book.title.substring(0, 30) }} </div>
                 </div>
                 <div class="flex p-3 flex-row overflow-hidden">
                     <div class="mr-2">
@@ -34,21 +35,18 @@
                 </div>
             </div>
         </transition>
-        <transition name="fade">
-            <FlashMessage :error="error" v-if="error" key="error" />
-        </transition>
     </div>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
-import FlashMessage from "@/components/FlashMessage";
 import Reviews from "@/components/Reviews";
+import FlashMessage from "@/components/FlashMessage";
 
 
 export default {
     name: "BookDetail",
-    components: { FlashMessage, Reviews },
+    components: { Reviews, FlashMessage },
 
     computed: {
         ...mapGetters(

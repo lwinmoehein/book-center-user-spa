@@ -1,8 +1,11 @@
 <template>
     <div>
-        <ReviewInput :reviewText="reviewText" @on-review-input-clicked="postReview"/>
+        <ReviewInput @on-review-input-clicked="postReview"/>
         <div class="flex flex-col">
             <Review v-for="review in book.reviews" :review="review" :key="'r'+review.id"/>
+            <div class="w-full h-20 flex justify-center items-center" v-if="book.reviews.length<=0">
+                <div>No reviews yet.</div>
+            </div>
         </div>
     </div>
 </template>
@@ -19,7 +22,7 @@ export default {
     ],
     data() {
         return {
-            reviewText:""
+            reviewStar:0
         }
     },
     methods: {
