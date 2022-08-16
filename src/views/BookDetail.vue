@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Loading :isLoading="loading"/>
+        <Loading :isLoading="loading" />
         <FlashMessage :error="error" />
         <transition name="fade" mode="out-in">
             <div v-if="!loading && book != null" class="p-2">
@@ -20,7 +20,13 @@
                                 {{ author.name }}
                             </div>
                         </div>
+                        <div class="flex mt-3">
+                            <button @click="addWantToRead" class="pl-2 pr-2 pt-1 pb-1 bg-blue-400 text-white">
+                                WantToRead
+                            </button>
+                        </div>
                     </div>
+
                 </div>
                 <div class="p-3">
                     <p>
@@ -55,10 +61,14 @@ export default {
         ...mapGetters(
             "bookDetail", [
             "loading", "error", "book"
+        ],
+            "wantToRead", [
+            "want_to_reads"
         ])
     },
     created() {
         this.$store.dispatch("bookDetail/getBook", this.$route.params.id);
+        this.$store.dispatch("wantToRead/getWantToReads");
     },
     watch: {
 
@@ -66,6 +76,11 @@ export default {
     methods: {
         goBack() {
             this.$router.go(-1);
+        },
+        addWantToRead() {
+            this.$store.dispatch("wantToRead/updateWantToRead", {
+                book_ids: [this.book.id]
+            });
         }
     },
     unmounted() {
