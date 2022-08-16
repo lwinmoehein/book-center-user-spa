@@ -22,4 +22,7 @@ export default {
   updateReview(payload) {
     return API.apiClient.patch(`/reviews/${payload.review_id}`, payload);
   },
+  deleteReview(payload) {
+    return API.apiClient.delete(`/reviews/${payload.id}`);
+  },
 };

@@ -76,6 +76,18 @@ export const actions = {
             });
 
     },
+    deleteReview({ commit }, payload) {
+        commit("SET_LOADING", true);
+        BookService.deleteReview(payload)
+            .then((response) => {
+                setBook(commit, response);
+            })
+            .catch((error) => {
+                commit("SET_LOADING", false);
+                commit("SET_ERROR", getError(error));
+            });
+
+    },
     setError({ commit }, message) {
         commit("SET_ERROR", message)
     }
