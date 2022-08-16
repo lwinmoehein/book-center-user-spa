@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Loading :isLoading="loading" />
+        <Loading :isLoading="loading || want_to_read_loading" />
         <FlashMessage :error="error" />
         <transition name="fade" mode="out-in">
             <div v-if="!loading && book != null" class="p-2">
@@ -21,8 +21,11 @@
                             </div>
                         </div>
                         <div class="flex mt-3">
-                            <button @click="addWantToRead" class="pl-2 pr-2 pt-1 pb-1 bg-blue-400 text-white">
-                                WantToRead
+                            <button @click="toggleWantToRead" class="pl-2 pr-2 pt-1 pb-1  text-white" :class="{'bg-green-500':isInToRead,'bg-blue-400':!isInToRead}">
+                                <span class="mr-2">Want To Read</span>
+                                <font-awesome-icon v-if="isInToRead" icon="fa-solid fa-check" />
+                                <font-awesome-icon v-else icon="fa-solid fa-plus" />
+
                             </button>
                         </div>
                     </div>
@@ -51,7 +54,7 @@ import { mapGetters } from "vuex";
 import Reviews from "@/components/Reviews";
 import FlashMessage from "@/components/FlashMessage";
 import Loading from "@/components/Loading";
-
+import WantToReadService from "../services/WantToReadService";
 
 export default {
     name: "BookDetail",
@@ -61,14 +64,16 @@ export default {
         ...mapGetters(
             "bookDetail", [
             "loading", "error", "book"
-        ],
-            "wantToRead", [
-            "want_to_reads"
-        ])
+        ]),
+        ...mapGetters("wantToRead", ["want_to_reads","want_to_read_loading","want_to_read_error"]),
+        isInToRead() {
+            if (!this.want_to_reads) return false;
+            return this.want_to_reads.map(b => b.id).includes(this.book.id);
+        }
     },
     created() {
+        this.getWantToReads();
         this.$store.dispatch("bookDetail/getBook", this.$route.params.id);
-        this.$store.dispatch("wantToRead/getWantToReads");
     },
     watch: {
 
@@ -77,10 +82,14 @@ export default {
         goBack() {
             this.$router.go(-1);
         },
-        addWantToRead() {
-            this.$store.dispatch("wantToRead/updateWantToRead", {
-                book_ids: [this.book.id]
-            });
+        toggleWantToRead() {
+            let bookIds = [];
+            if(!this.isInToRead) bookIds.push(this.book.id);
+
+            WantToReadService.updateWantToRead({ book_ids: bookIds }).then(this.getWantToReads())
+        },
+        getWantToReads() {
+            this.$store.dispatch("wantToRead/getWantToReads");
         }
     },
     unmounted() {
