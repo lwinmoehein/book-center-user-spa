@@ -31,6 +31,13 @@ const routes = [
       import(/* webpackChunkName: "dashboard" */ "../views/Category"),
   },
   {
+    path: "/want-to-read",
+    name: "want-to-read",
+    meta: { middleware: [auth] },
+    component: () =>
+      import(/* webpackChunkName: "dashboard" */ "../views/WantToRead"),
+  },
+  {
     path: "/category-detail/:id",
     name: "category-detail",
     meta: { middleware: [auth] },

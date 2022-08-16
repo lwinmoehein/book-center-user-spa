@@ -45,6 +45,16 @@ export const actions = {
             setWantToReads(commit, response);
         });
     },
+    storeWantToRead({ commit }, payload) {
+        return WantToReadService.storeWantToRead(payload).then((response) => {
+            setWantToReads(commit, response);
+        });
+    },
+    deleteWantToRead({ commit }, payload) {
+        return WantToReadService.deleteWantToRead(payload).then((response) => {
+            setWantToReads(commit, response);
+        });
+    },
     setError({ commit }, message) {
         commit("SET_ERROR", message)
     }

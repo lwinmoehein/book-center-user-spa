@@ -21,7 +21,8 @@
                             </div>
                         </div>
                         <div class="flex mt-3">
-                            <button @click="toggleWantToRead" class="pl-2 pr-2 pt-1 pb-1  text-white" :class="{'bg-green-500':isInToRead,'bg-blue-400':!isInToRead}">
+                            <button @click="toggleWantToRead" class="pl-2 pr-2 pt-1 pb-1  text-white"
+                                :class="{ 'bg-green-500': isInToRead, 'bg-blue-400': !isInToRead }">
                                 <span class="mr-2">Want To Read</span>
                                 <font-awesome-icon v-if="isInToRead" icon="fa-solid fa-check" />
                                 <font-awesome-icon v-else icon="fa-solid fa-plus" />
@@ -65,7 +66,7 @@ export default {
             "bookDetail", [
             "loading", "error", "book"
         ]),
-        ...mapGetters("wantToRead", ["want_to_reads","want_to_read_loading","want_to_read_error"]),
+        ...mapGetters("wantToRead", ["want_to_reads", "want_to_read_loading", "want_to_read_error"]),
         isInToRead() {
             if (!this.want_to_reads) return false;
             return this.want_to_reads.map(b => b.id).includes(this.book.id);
@@ -83,10 +84,12 @@ export default {
             this.$router.go(-1);
         },
         toggleWantToRead() {
-            let bookIds = [];
-            if(!this.isInToRead) bookIds.push(this.book.id);
+            if (this.isInToRead) {
+                WantToReadService.deleteWantToRead({ book_id: this.book.id }).then(this.getWantToReads())
+            } else {
+                WantToReadService.storeWantToRead({ book_id: this.book.id }).then(this.getWantToReads())
+            }
 
-            WantToReadService.updateWantToRead({ book_ids: bookIds }).then(this.getWantToReads())
         },
         getWantToReads() {
             this.$store.dispatch("wantToRead/getWantToReads");
