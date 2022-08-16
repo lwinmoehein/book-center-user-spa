@@ -6,6 +6,8 @@ export const namespaced = true;
 function setWantToReads(commit, response) {
     commit("SET_WANT_TO_READS", response.data.data);
     commit("SET_LOADING", false);
+    commit("SET_META", response.data.meta);
+    commit("SET_LINKS", response.data.links);
 }
 function setWantToRead(commit, response) {
     commit("SET_WANT_TO_READ", response.data.data);
@@ -13,14 +15,22 @@ function setWantToRead(commit, response) {
 }
 
 export const state = {
-    user_want_to_reads:[],
+    user_want_to_reads: [],
     want_to_reads: [],
     want_to_read_loading: false,
     want_to_read_error: null,
+    meta: null,
+    links: null,
+    currentPage: 1
 };
 
 export const mutations = {
-
+    SET_META(state, meta) {
+        state.meta = meta;
+    },
+    SET_LINKS(state, links) {
+        state.links = links;
+    },
     SET_WANT_TO_READS(state, want_to_reads) {
         state.want_to_reads = want_to_reads;
     },
@@ -48,7 +58,7 @@ export const actions = {
             });
 
     },
-    getWantToRead({ commit },payload) {
+    getWantToRead({ commit }, payload) {
         commit("SET_LOADING", true);
         WantToReadService.getWantToRead(payload)
             .then((response) => {
@@ -92,5 +102,11 @@ export const getters = {
     },
     want_to_read_error: (state) => {
         return state.want_to_read_error;
+    },
+    meta: (state) => {
+        return state.meta;
+    },
+    links: (state) => {
+        return state.links;
     },
 };

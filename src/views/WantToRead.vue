@@ -7,7 +7,7 @@
                             <template v-slot:buttons>
                                 <button @click="removeWantToRead(book)"
                                     class="pl-2 pr-2 pt-1 pb-1  text-white bg-blue-400">
-                                    <span class="mr-2">Want To Read</span>
+                                    <span class="mr-2">Remove</span>
                                     <font-awesome-icon icon="fa-solid fa-trash-can" class="text-red-500" />
                                 </button>
                             </template>
@@ -43,6 +43,7 @@ export default {
             "wantToRead", [
             "want_to_reads", "want_to_read_error",
             "want_to_read_loading",
+            "meta","links","currentPage"
         ])
     },
     created() {
