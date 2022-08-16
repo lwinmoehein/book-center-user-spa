@@ -1,6 +1,7 @@
 <template>
     <div>
-    <FlashMessage :error="error" />
+        <Loading :isLoading="loading"/>
+        <FlashMessage :error="error" />
         <transition name="fade" mode="out-in">
             <div v-if="!loading && book != null" class="p-2">
                 <div class="flex mb-5 p-3">
@@ -27,11 +28,12 @@
                     </p>
                     <div class="font-semibold mt-5 mb-2">Categories:</div>
                     <div class="flex flex-nowrap text-center overflow-scroll bg-white  gap-5 scrollbar-hide">
-                        <div class="bg-blue-400 pl-1 pr-1 flex-none rounded-md text-white" v-for="category in book.categories" :key="category.id">{{ category.name }}</div>
+                        <div class="bg-blue-400 pl-1 pr-1 flex-none rounded-md text-white"
+                            v-for="category in book.categories" :key="category.id">{{ category.name }}</div>
                     </div>
                 </div>
                 <div class="p-3">
-                    <Reviews :book="book"/>
+                    <Reviews :book="book" />
                 </div>
             </div>
         </transition>
@@ -42,11 +44,12 @@
 import { mapGetters } from "vuex";
 import Reviews from "@/components/Reviews";
 import FlashMessage from "@/components/FlashMessage";
+import Loading from "@/components/Loading";
 
 
 export default {
     name: "BookDetail",
-    components: { Reviews, FlashMessage },
+    components: { Reviews, FlashMessage, Loading },
 
     computed: {
         ...mapGetters(
@@ -62,7 +65,7 @@ export default {
     },
     methods: {
         goBack() {
-            this.$router.replace({ path: '/dashboard' });
+            this.$router.go(-1);
         }
     },
     unmounted() {

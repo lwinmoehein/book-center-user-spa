@@ -13,17 +13,19 @@
         <transition name="fade">
             <FlashMessage :error="error" v-if="error" key="error" />
         </transition>
+        <Loading :isLoading="loading"/>
     </div>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
 import FlashMessage from "@/components/FlashMessage";
+import Loading from "@/components/Loading";
 
 
 export default {
     name: "Categories",
-    components: { FlashMessage },
+    components: { FlashMessage, Loading },
 
     computed: {
         ...mapGetters(

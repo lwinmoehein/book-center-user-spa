@@ -7,14 +7,15 @@
                     <div> {{ selected_category.name }} </div>
                 </div>
                 <div class="grid grid-cols-2 gap-4">
-                    <Book class="h-full" v-for="book in selected_category.books" :key="book.id" :book="book"></Book>
+                    <Book @on-book-clicked="onBookClicked" class="h-full" v-for="book in selected_category.books"
+                        :key="book.id" :book="book"></Book>
                 </div>
             </div>
         </transition>
         <transition name="fade">
             <FlashMessage :error="error" v-if="error" key="error" />
         </transition>
-
+        <Loading :isLoading="loading" />
 
     </div>
 </template>
@@ -24,11 +25,12 @@
 import { mapGetters } from "vuex";
 import FlashMessage from "@/components/FlashMessage";
 import Book from '@/components/Book';
+import Loading from "@/components/Loading";
 
 
 export default {
     name: "CategoryDetail",
-    components: { FlashMessage, Book },
+    components: { FlashMessage, Book, Loading },
     computed: {
         ...mapGetters(
             "category", [
@@ -46,6 +48,12 @@ export default {
     methods: {
         goBack() {
             this.$router.replace({ path: '/category' });
+        },
+        onBookClicked(book) {
+            this.$router.push({
+                name: "category-book-detail",
+                params: { id: book.id }
+            });
         }
     }
 
