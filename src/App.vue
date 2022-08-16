@@ -3,17 +3,17 @@
     <main class="container mx-auto mb-20">
       <router-view />
     </main>
-    <Header v-if="isLoggedIn" />
+    <Menu v-if="isLoggedIn" />
   </div>
 </template>
 
 <script>
-import Header from "@/components/Header";
+import Menu from "@/components/Menu";
 
 export default {
   name: "app",
   components: {
-    Header,
+    Menu,
   },
   computed: {
     isLoggedIn() {

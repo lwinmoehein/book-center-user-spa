@@ -7,8 +7,13 @@ function setWantToReads(commit, response) {
     commit("SET_WANT_TO_READS", response.data.data);
     commit("SET_LOADING", false);
 }
+function setWantToRead(commit, response) {
+    commit("SET_WANT_TO_READ", response.data.data);
+    commit("SET_LOADING", false);
+}
 
 export const state = {
+    user_want_to_reads:[],
     want_to_reads: [],
     want_to_read_loading: false,
     want_to_read_error: null,
@@ -18,6 +23,9 @@ export const mutations = {
 
     SET_WANT_TO_READS(state, want_to_reads) {
         state.want_to_reads = want_to_reads;
+    },
+    SET_WANT_TO_READ(state, want_to_reads) {
+        state.user_want_to_reads = want_to_reads;
     },
     SET_LOADING(state, want_to_read_loading) {
         state.want_to_read_loading = want_to_read_loading;
@@ -33,6 +41,18 @@ export const actions = {
         WantToReadService.getWantToReads()
             .then((response) => {
                 setWantToReads(commit, response);
+            })
+            .catch((want_to_read_error) => {
+                commit("SET_LOADING", false);
+                commit("SET_ERROR", getError(want_to_read_error));
+            });
+
+    },
+    getWantToRead({ commit },payload) {
+        commit("SET_LOADING", true);
+        WantToReadService.getWantToRead(payload)
+            .then((response) => {
+                setWantToRead(commit, response);
             })
             .catch((want_to_read_error) => {
                 commit("SET_LOADING", false);
@@ -63,6 +83,9 @@ export const actions = {
 export const getters = {
     want_to_reads: (state) => {
         return state.want_to_reads;
+    },
+    user_want_to_reads: (state) => {
+        return state.user_want_to_reads;
     },
     want_to_read_loading: (state) => {
         return state.want_to_read_loading;

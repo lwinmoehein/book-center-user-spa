@@ -10,6 +10,9 @@ export default {
   getWantToReads() {
     return API.apiClient.get(`/want-to-reads`);
   },
+  getWantToRead(payload) {
+    return API.apiClient.get(`/want-to-reads/${payload.book_id}`);
+  },
   updateWantToRead(payload) {
     return API.apiClient.post("/want-to-reads/sync", payload);
   },
@@ -17,6 +20,6 @@ export default {
     return API.apiClient.post("/want-to-reads", payload);
   },
   deleteWantToRead(payload) {
-    return API.apiClient.delete("/want-to-reads", payload);
+    return API.apiClient.delete(`/want-to-reads/${payload.book_id}`);
   }
 };

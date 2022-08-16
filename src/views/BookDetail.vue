@@ -66,10 +66,17 @@ export default {
             "bookDetail", [
             "loading", "error", "book"
         ]),
-        ...mapGetters("wantToRead", ["want_to_reads", "want_to_read_loading", "want_to_read_error"]),
+        ...mapGetters("wantToRead",
+            [
+                "want_to_reads",
+                "user_want_to_reads",
+                "want_to_read_loading",
+                "want_to_read_error"
+            ]),
         isInToRead() {
-            if (!this.want_to_reads) return false;
-            return this.want_to_reads.map(b => b.id).includes(this.book.id);
+            if (this.user_want_to_reads.length<=0) return false;
+
+            return true;
         }
     },
     created() {
@@ -92,7 +99,7 @@ export default {
 
         },
         getWantToReads() {
-            this.$store.dispatch("wantToRead/getWantToReads");
+            this.$store.dispatch("wantToRead/getWantToRead", { book_id: this.$route.params.id });
         }
     },
     unmounted() {
