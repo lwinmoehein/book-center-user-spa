@@ -20,6 +20,9 @@
                                 {{ author.name }}
                             </div>
                         </div>
+                        <div>
+                            Average Rating <span class="text-blue-500">{{Number(book.average_rating).toFixed(1)}}</span>
+                        </div>
                         <div class="flex mt-3">
                             <button @click="toggleWantToRead" class="pl-2 pr-2 pt-1 pb-1  text-white"
                                 :class="{ 'bg-green-500': isInToRead, 'bg-blue-400': !isInToRead }">
