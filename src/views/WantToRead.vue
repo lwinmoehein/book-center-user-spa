@@ -47,6 +47,8 @@ export default {
         ])
     },
     created() {
+        if(this.want_to_reads.length>0) return;
+        
         this.$store.dispatch("wantToRead/setCurrentPage", 1);
         this.$store.dispatch("wantToRead/clearWantToReads");
 

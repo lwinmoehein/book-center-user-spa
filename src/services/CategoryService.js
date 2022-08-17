@@ -12,5 +12,8 @@ export default {
   },
   updateCategories(payload) {
     return API.apiClient.post("/users/category", payload);
-  }
+  },
+  getCategoryBooks(payload) {
+    return API.apiClient.get(`/categorie-detail/${payload.category_id}?page=${payload.page}`);
+  },
 };

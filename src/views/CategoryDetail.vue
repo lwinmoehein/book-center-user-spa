@@ -6,11 +6,11 @@
             <div class="p-5">
                 <div class="flex mb-5">
                     <font-awesome-icon @click="goBack" icon="fa-solid fa-arrow-left" class="font-bold text-xl mr-3" />
-                    <div> {{ selected_category.name }} </div>
+                    <div> {{ category.name }} </div>
                 </div>
                 <div class="grid gap-2 grid-cols-3">
-                    <Book @on-book-clicked="onBookClicked" class="h-52" v-for="book in selected_category.books"
-                        :key="book.id" :book="book"></Book>
+                    <Book @on-book-clicked="onBookClicked" class="h-52" v-for="book in books" :key="book.id"
+                        :book="book"></Book>
                 </div>
             </div>
         </transition>
@@ -34,17 +34,32 @@ export default {
     components: { FlashMessage, Book, Loading },
     computed: {
         ...mapGetters(
-            "category", [
+            "categoryDetail", [
             "loading", "error",
-            "selected_category",
+            "category", "books",
+            "books_meta", "books_links",
+            "message", "current_page"
         ])
     },
+    data() {
+        return {
+            isBooksFetching: false
+        }
+    },
     created() {
-        this.$store.dispatch("category/getCategory", this.$route.params.id);
+        if(this.books.length>0) return;
+        this.$store.dispatch("categoryDetail/getCategory", this.$route.params.id);
 
+        this.getBooks();
+        window.addEventListener("scroll", () => {
+            this.onScroll();
+        })
     },
     watch: {
-
+        loading() {
+            if (!this.loading)
+                this.isBooksFetching = false;
+        }
     },
     methods: {
         goBack() {
@@ -55,7 +70,25 @@ export default {
                 name: "category-book-detail",
                 params: { id: book.id }
             });
-        }
+        },
+        getBooks() {
+            this.$store.dispatch("categoryDetail/getCategoryBooks", { page: this.current_page, category_id: this.$route.params.id });
+        },
+        onScroll() {
+            let windowRelativeBottom = document.documentElement.getBoundingClientRect().bottom;
+
+            if ((windowRelativeBottom > document.documentElement.clientHeight + 100) || this.isBooksFetching) return;
+
+            if (this.current_page >= this.books_meta.last_page) {
+                return;
+            }
+
+            this.$store.dispatch("categoryDetail/setCurrentPage", this.current_page + 1);
+
+            this.isBooksFetching = true;
+
+            this.getBooks();
+        },
     }
 
 };

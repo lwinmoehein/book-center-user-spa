@@ -9,6 +9,7 @@ import * as category from "@/store/modules/Category";
 import * as language from "@/store/modules/Language";
 import * as bookDetail from "@/store/modules/BookDetail";
 import * as wantToRead from "@/store/modules/WantToRead";
+import * as categoryDetail from "@/store/modules/CategoryDetail";
 
 Vue.use(Vuex);
 
@@ -23,6 +24,7 @@ export default new Vuex.Store({
     category,
     language,
     bookDetail,
-    wantToRead
+    wantToRead,
+    categoryDetail
   },
 });
