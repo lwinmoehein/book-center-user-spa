@@ -21,7 +21,7 @@ export const state = {
     want_to_read_error: null,
     meta: null,
     links: null,
-    currentPage: 1
+    current_page: 1
 };
 
 export const mutations = {
@@ -31,11 +31,17 @@ export const mutations = {
     SET_LINKS(state, links) {
         state.links = links;
     },
+    SET_PAGE(state, page) {
+        state.current_page = page;
+    },
     SET_WANT_TO_READS(state, want_to_reads) {
-        state.want_to_reads = want_to_reads;
+        state.want_to_reads = state.want_to_reads.concat(want_to_reads)
     },
     SET_WANT_TO_READ(state, want_to_reads) {
         state.user_want_to_reads = want_to_reads;
+    },
+    REMOVE_WANT_TO_READS(state, book_id) {
+        state.want_to_reads = state.want_to_reads.filter(b=>b.id!=book_id);
     },
     SET_LOADING(state, want_to_read_loading) {
         state.want_to_read_loading = want_to_read_loading;
@@ -43,12 +49,15 @@ export const mutations = {
     SET_ERROR(state, want_to_read_error) {
         state.want_to_read_error = want_to_read_error;
     },
+    CLEAR_WANT_TO_READS(state) {
+        state.want_to_reads = [];
+    }
 };
 
 export const actions = {
-    getWantToReads({ commit }) {
+    getWantToReads({ commit }, payload) {
         commit("SET_LOADING", true);
-        WantToReadService.getWantToReads()
+        WantToReadService.getWantToReads(payload)
             .then((response) => {
                 setWantToReads(commit, response);
             })
@@ -85,8 +94,22 @@ export const actions = {
             setWantToReads(commit, response);
         });
     },
+    removeWantToRead({ commit }, payload) {
+        commit("REMOVE_WANT_TO_READS",payload.book_id)
+    },
     setError({ commit }, message) {
         commit("SET_ERROR", message)
+    },
+    setLoading({ commit }, isLoading) {
+        commit("SET_LOADING", isLoading)
+    },
+    setCurrentPage({ commit }, page) {
+        commit("SET_PAGE", page)
+    },
+    clearWantToReads({ commit }) {
+        commit("CLEAR_WANT_TO_READS");
+        commit("SET_META", null);
+        commit("SET_LINKS", null);
     }
 };
 
@@ -108,5 +131,8 @@ export const getters = {
     },
     links: (state) => {
         return state.links;
+    },
+    current_page: (state) => {
+        return state.current_page;
     },
 };

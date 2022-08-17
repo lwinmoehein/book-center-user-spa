@@ -10,7 +10,7 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 /* import specific icons */
-import { faArrowRight } from '@fortawesome/free-solid-svg-icons'
+import {  faArrowRight } from '@fortawesome/free-solid-svg-icons'
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons'
 import { faHouse } from '@fortawesome/free-solid-svg-icons'
 import { faGears } from '@fortawesome/free-solid-svg-icons'
@@ -38,3 +38,4 @@ new Vue({
   store,
   render: (h) => h(App),
 }).$mount("#app");
+

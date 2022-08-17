@@ -7,8 +7,8 @@ export default {
   getCategory(id) {
     return API.apiClient.get(`/categories/${id}`);
   },
-  getWantToReads() {
-    return API.apiClient.get(`/want-to-reads`);
+  getWantToReads(payload) {
+    return API.apiClient.get(`/want-to-reads/?page=${payload.page}`);
   },
   getWantToRead(payload) {
     return API.apiClient.get(`/want-to-reads/${payload.book_id}`);

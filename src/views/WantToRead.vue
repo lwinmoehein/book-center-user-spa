@@ -1,17 +1,18 @@
 <template>
-    <div class="flex w-full">
+    <div class="flex w-full ">
         <transition name="fade" mode="out-in">
             <div v-if="want_to_reads.length > 0">
-                <div class="flex flex-col overflow-scroll gap-3 w-full">
-                        <HorizontalBook class="w-full h-40" v-for="book in want_to_reads" :book="book" :key="book.id">
-                            <template v-slot:buttons>
-                                <button @click="removeWantToRead(book)"
-                                    class="pl-2 pr-2 pt-1 pb-1  text-white bg-blue-400">
-                                    <span class="mr-2">Remove</span>
-                                    <font-awesome-icon icon="fa-solid fa-trash-can" class="text-red-500" />
-                                </button>
-                            </template>
-                        </HorizontalBook>
+                <div class="flex flex-col gap-3 w-full h-full" @scroll="onScroll" ref="wantToReadPagination">
+                    <HorizontalBook @on-book-clicked="onBookClicked" class="w-full h-40" v-for="book in want_to_reads"
+                        :book="book" :key="book.id">
+                        <template v-slot:buttons>
+                            <button @click="removeWantToRead(book)"
+                                class="pl-1 rounded-sm pr-1 border-red-400 border-2 ">
+                                <span class="mr-2">Remove</span>
+                                <font-awesome-icon icon="fa-solid fa-trash-can" class="text-black" />
+                            </button>
+                        </template>
+                    </HorizontalBook>
                 </div>
             </div>
         </transition>
@@ -37,27 +38,68 @@ import WantToReadService from "../services/WantToReadService";
 export default {
     name: "WantToReadView",
     components: { FlashMessage, Loading, HorizontalBook },
-
+    data() {
+        return {
+            isWantToReadsFetching: false
+        }
+    },
     computed: {
         ...mapGetters(
             "wantToRead", [
             "want_to_reads", "want_to_read_error",
             "want_to_read_loading",
-            "meta","links","currentPage"
+            "meta", "links", "current_page"
         ])
     },
     created() {
+        this.$store.dispatch("wantToRead/setCurrentPage", 1);
+        this.$store.dispatch("wantToRead/clearWantToReads");
+
         this.getWantToReads();
+        window.addEventListener("scroll", () => {
+            this.onScroll();
+        })
     },
     watch: {
-
+        want_to_read_loading() {
+            if (!this.want_to_read_loading)
+                this.isWantToReadsFetching = false;
+        }
     },
     methods: {
         removeWantToRead(book) {
-            WantToReadService.deleteWantToRead({ book_id: book.id }).then(this.getWantToReads())
+            this.$store.dispatch("wantToRead/setLoading", true);
+            WantToReadService.deleteWantToRead({ book_id: book.id }).then(() => {
+                this.$store.dispatch("wantToRead/removeWantToRead", { book_id: book.id });
+                this.$store.dispatch("wantToRead/setLoading", false);
+            }).error(() => {
+                this.$store.dispatch("wantToRead/setLoading", false);
+            });
         },
         getWantToReads() {
-            this.$store.dispatch("wantToRead/getWantToReads");
+            this.$store.dispatch("wantToRead/getWantToReads", { page: this.current_page });
+        },
+        onScroll() {
+            let windowRelativeBottom = document.documentElement.getBoundingClientRect().bottom;
+
+            if ((windowRelativeBottom > document.documentElement.clientHeight + 100) || this.isWantToReadsFetching) return;
+
+            if (this.current_page >= this.meta.last_page) {
+                return;
+            }
+
+            this.$store.dispatch("wantToRead/setCurrentPage", this.current_page + 1);
+
+            this.isWantToReadsFetching = true;
+
+            this.getWantToReads();
+        },
+        
+        onBookClicked(book) {
+            this.$router.push({
+                name: "want-to-read-book-detail",
+                params: { id: book.id }
+            });
         }
     }
 
