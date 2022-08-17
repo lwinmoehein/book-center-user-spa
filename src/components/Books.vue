@@ -1,8 +1,8 @@
 <template>
 
   <div class="h-full">
-    <Loading :isLoading="loading && !(books.length>0 || recommended_books.length>0)"/>
-    <transition name="fade" mode="out-in" v-if="books.length>0 || recommended_books.length>0">
+    <Loading v-if="loading && !(books.length>0 || recommended_books.length>0)" :isLoading="true"/>
+    <transition v-else name="fade" mode="out-in">
       <div class="p-2">
         <div>
           <div
@@ -90,7 +90,6 @@ export default {
     return {
       isTopBooksFetching: false,
       isRecommendedBooksFetching: false,
-      isHomeLoading:true
     }
   },
   computed: {
