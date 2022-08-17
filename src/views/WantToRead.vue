@@ -3,16 +3,8 @@
         <transition name="fade" mode="out-in">
             <div v-if="want_to_reads.length > 0">
                 <div class="flex flex-col gap-3 w-full h-full" @scroll="onScroll" ref="wantToReadPagination">
-                    <HorizontalBook @on-book-clicked="onBookClicked" class="w-full h-40" v-for="book in want_to_reads"
-                        :book="book" :key="book.id">
-                        <template v-slot:buttons>
-                            <button @click="removeWantToRead(book)"
-                                class="pl-1 rounded-sm pr-1 border-red-400 border-2 ">
-                                <span class="mr-2">Remove</span>
-                                <font-awesome-icon icon="fa-solid fa-trash-can" class="text-black" />
-                            </button>
-                        </template>
-                    </HorizontalBook>
+                    <HorizontalBook @on-book-remove-clicked="removeWantToRead" @on-book-clicked="onBookClicked" class="w-full h-40" v-for="book in want_to_reads"
+                        :book="book" :key="book.id" />
                 </div>
             </div>
         </transition>
@@ -72,7 +64,7 @@ export default {
             WantToReadService.deleteWantToRead({ book_id: book.id }).then(() => {
                 this.$store.dispatch("wantToRead/removeWantToRead", { book_id: book.id });
                 this.$store.dispatch("wantToRead/setLoading", false);
-            }).error(() => {
+            }).catch(() => {
                 this.$store.dispatch("wantToRead/setLoading", false);
             });
         },
@@ -94,7 +86,7 @@ export default {
 
             this.getWantToReads();
         },
-        
+
         onBookClicked(book) {
             this.$router.push({
                 name: "want-to-read-book-detail",
