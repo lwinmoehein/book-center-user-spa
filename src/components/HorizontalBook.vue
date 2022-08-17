@@ -1,10 +1,10 @@
 
 <template>
-    <transition class="w-full h-40" :duration="{ enter: 500, leave: 800 }">
+    <transition class="w-full h-44" :duration="{ enter: 500, leave: 800 }">
 
-        <div class="shadow-md p-2 flex flex-none  flex-row" @click="$emit('on-book-clicked', book)">
-            <img class="h-full w-1/3 rounded-md object-cover flex-none" :src="book.cover_url" alt="">
-            <div class="p-2">
+        <div class="shadow-md h-44 w-full flex flex-none  flex-row" @click="$emit('on-book-clicked', book)">
+            <img class="h-44 w-36 rounded-md object-cover flex-none" :src="book.cover_url" alt="">
+            <div class="p-2 w-full">
                 <div class="font-semibold">{{ book.title.substring(0, 20) }}</div>
                 <div class="text-blue-500">{{ book.price }}</div>
                 <div>

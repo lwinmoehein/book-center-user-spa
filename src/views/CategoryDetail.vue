@@ -6,8 +6,8 @@
                     <font-awesome-icon @click="goBack" icon="fa-solid fa-arrow-left" class="font-bold text-xl mr-3" />
                     <div> {{ selected_category.name }} </div>
                 </div>
-                <div class="grid grid-cols-2 gap-4">
-                    <Book @on-book-clicked="onBookClicked" class="h-full" v-for="book in selected_category.books"
+                <div class="grid gap-2 grid-cols-3">
+                    <Book @on-book-clicked="onBookClicked" class="h-52" v-for="book in selected_category.books"
                         :key="book.id" :book="book"></Book>
                 </div>
             </div>
