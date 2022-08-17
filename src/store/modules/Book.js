@@ -52,17 +52,13 @@ export const mutations = {
     state.books = books;
   },
   SET_PAGINATED_BOOKS(state, books) {
-    books.forEach(element => {
-      state.books.push(element);
-    });
+    state.books = state.books.concat(books)
   },
   SET_RECOMMENDED_BOOKS(state, recommended_books) {
     state.recommended_books = recommended_books;
   },
   SET_PAGINATED_RECOMMENDED_BOOKS(state, recommended_books) {
-    recommended_books.forEach(element => {
-      state.recommended_books.push(element);
-    });
+      state.recommended_books = state.recommended_books.concat(recommended_books);
   },
   SET_RECOMMENDED_META(state, recommended_meta) {
     state.recommended_meta = recommended_meta;
