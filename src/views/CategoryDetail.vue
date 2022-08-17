@@ -1,5 +1,7 @@
 <template>
-    <div>
+    <div class="w-full h-full">
+        <Loading :isLoading="loading" />
+
         <transition name="fade" mode="out-in" v-if="!loading">
             <div class="p-5">
                 <div class="flex mb-5">
@@ -15,7 +17,6 @@
         <transition name="fade">
             <FlashMessage :error="error" v-if="error" key="error" />
         </transition>
-        <Loading :isLoading="loading" />
 
     </div>
 </template>

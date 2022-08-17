@@ -1,17 +1,19 @@
 <template>
-    <div class="flex w-full p-2 ">
+    <div class="flex w-full h-full">
+        <Loading :isLoading="want_to_read_loading" />
+
         <FlashMessage :error="want_to_read_error" :message="message" />
 
         <transition name="fade" mode="out-in">
-                <div v-if="want_to_reads.length > 0" class="flex flex-col gap-3 w-full h-full" @scroll="onScroll" ref="wantToReadPagination">
-                    <HorizontalBook @on-book-remove-clicked="removeWantToRead" @on-book-clicked="onBookClicked"
-                        class="w-full h-40" v-for="book in want_to_reads" :book="book" :key="book.id" />
-                </div>
+            <div v-if="want_to_reads.length > 0" class="flex flex-col gap-3 w-full h-full" @scroll="onScroll"
+                ref="wantToReadPagination">
+                <HorizontalBook @on-book-remove-clicked="removeWantToRead" @on-book-clicked="onBookClicked"
+                    class="w-full h-40" v-for="book in want_to_reads" :book="book" :key="book.id" />
+            </div>
         </transition>
         <transition name="fade">
             <FlashMessage :error="want_to_read_error" v-if="want_to_read_error" key="want_to_read_error" />
         </transition>
-        <Loading :isLoading="want_to_read_loading" />
         <div v-if="!want_to_read_loading && want_to_reads.length <= 0"
             class="w-full h-full flex flex-col items-center justify-center mt-60 font-semibold">
             <div>Please add some of your favorite books</div>

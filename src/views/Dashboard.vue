@@ -1,10 +1,6 @@
 <template>
-  <div class="p-0 xl:px-0">
-    <div class="max-w-xl m-auto">
-      <article class="p-2 bg-white rounded shadow">
+  <div>
         <Books />
-      </article>
-    </div>
   </div>
 </template>
 

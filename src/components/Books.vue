@@ -1,9 +1,9 @@
 <template>
 
-  <div>
-    <Loading :isLoading="loading"/>
-    <transition name="fade" mode="out-in" v-if="!loading">
-      <div>
+  <div class="h-full">
+    <Loading :isLoading="loading && !(books.length>0 || recommended_books.length>0)"/>
+    <transition name="fade" mode="out-in" v-if="books.length>0 || recommended_books.length>0">
+      <div class="p-2">
         <div>
           <div
             class="flex flex-nowrap text-center overflow-scroll sticky top-0 bg-white border-b-2 gap-5 border-gray-300 scrollbar-hide">
@@ -89,7 +89,8 @@ export default {
   data() {
     return {
       isTopBooksFetching: false,
-      isRecommendedBooksFetching: false
+      isRecommendedBooksFetching: false,
+      isHomeLoading:true
     }
   },
   computed: {

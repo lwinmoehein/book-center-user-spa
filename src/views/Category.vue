@@ -1,5 +1,6 @@
 <template>
-    <div>
+    <div class="h-full">
+        <Loading :isLoading="loading"/>
 
         <transition name="fade" mode="out-in">
             <div class="grid grid-cols-2 gap-3 auto-rows-fr p-2">
@@ -13,7 +14,6 @@
         <transition name="fade">
             <FlashMessage :error="error" v-if="error" key="error" />
         </transition>
-        <Loading :isLoading="loading"/>
     </div>
 </template>
 

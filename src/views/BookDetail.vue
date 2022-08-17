@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="h-full">
         <Loading :isLoading="loading || want_to_read_loading" />
         <FlashMessage :error="error" :message="message" />
         <transition name="fade" mode="out-in">
