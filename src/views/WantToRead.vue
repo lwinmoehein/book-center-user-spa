@@ -1,10 +1,12 @@
 <template>
     <div class="flex w-full ">
+        <FlashMessage :error="want_to_read_error" :message="message" />
+
         <transition name="fade" mode="out-in">
             <div v-if="want_to_reads.length > 0">
                 <div class="flex flex-col gap-3 w-full h-full" @scroll="onScroll" ref="wantToReadPagination">
-                    <HorizontalBook @on-book-remove-clicked="removeWantToRead" @on-book-clicked="onBookClicked" class="w-full h-40" v-for="book in want_to_reads"
-                        :book="book" :key="book.id" />
+                    <HorizontalBook @on-book-remove-clicked="removeWantToRead" @on-book-clicked="onBookClicked"
+                        class="w-full h-40" v-for="book in want_to_reads" :book="book" :key="book.id" />
                 </div>
             </div>
         </transition>
@@ -32,7 +34,8 @@ export default {
     components: { FlashMessage, Loading, HorizontalBook },
     data() {
         return {
-            isWantToReadsFetching: false
+            isWantToReadsFetching: false,
+            message: null
         }
     },
     computed: {
@@ -62,8 +65,11 @@ export default {
         removeWantToRead(book) {
             this.$store.dispatch("wantToRead/setLoading", true);
             WantToReadService.deleteWantToRead({ book_id: book.id }).then(() => {
+                this.message = "Removed book from the list";
                 this.$store.dispatch("wantToRead/removeWantToRead", { book_id: book.id });
                 this.$store.dispatch("wantToRead/setLoading", false);
+                this.$store.dispatch("wantToRead/setMessage", "Removed from want to read list.");
+
             }).catch(() => {
                 this.$store.dispatch("wantToRead/setLoading", false);
             });

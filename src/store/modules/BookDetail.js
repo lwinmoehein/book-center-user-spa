@@ -12,6 +12,7 @@ export const state = {
     book: null,
     loading: false,
     error: null,
+    message: null
 };
 
 export const mutations = {
@@ -25,6 +26,9 @@ export const mutations = {
     SET_ERROR(state, error) {
         state.error = error;
     },
+    SET_MESSAGE(state, message) {
+        state.message = message;
+    }
 };
 
 export const actions = {
@@ -57,6 +61,7 @@ export const actions = {
         BookService.postReview(payload)
             .then((response) => {
                 setBook(commit, response);
+                commit("SET_MESSAGE", "Posted your review.");
             })
             .catch((error) => {
                 commit("SET_LOADING", false);
@@ -69,6 +74,8 @@ export const actions = {
         BookService.updateReview(payload)
             .then((response) => {
                 setBook(commit, response);
+                commit("SET_MESSAGE", "Updated your review.");
+
             })
             .catch((error) => {
                 commit("SET_LOADING", false);
@@ -81,6 +88,8 @@ export const actions = {
         BookService.deleteReview(payload)
             .then((response) => {
                 setBook(commit, response);
+                commit("SET_MESSAGE", "Deleted your review.");
+
             })
             .catch((error) => {
                 commit("SET_LOADING", false);
@@ -90,6 +99,9 @@ export const actions = {
     },
     setError({ commit }, message) {
         commit("SET_ERROR", message)
+    },
+    setMessage({commit},message){
+        commit("SET_MESSAGE",message);
     }
 };
 
@@ -102,5 +114,8 @@ export const getters = {
     },
     error: (state) => {
         return state.error;
+    },
+    message: (state) => {
+        return state.message;
     },
 };

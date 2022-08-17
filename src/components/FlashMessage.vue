@@ -1,9 +1,8 @@
 <template>
   <div class="bottom-12 fixed w-full left-0" :class="{'bottom-0':!isLoggedIn}">
     <transition-group name="fade">
-      <p>{{ error }}</p>
-      <p v-if="dataMessage" class="mt-2 text-sm text-green-500" key="dataMessage">
-        {{ dataMessage }}
+      <p v-if="dataMessage" key="error" class="mt-2 text-sm bg-green-400 pb-2 pt-2 text-white w-full flex flex-col items-start">
+        <span class="ml-2">{{ dataMessage }}</span>
       </p>
       <p v-if="dataError && getType(dataError) === 'string'" key="error" class="mt-2 text-sm bg-red-400 pb-2 pt-2 text-white w-full flex flex-col items-start">
         <span class="ml-2">{{ dataError }}</span>

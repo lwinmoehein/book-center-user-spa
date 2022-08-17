@@ -21,6 +21,8 @@ export const state = {
     want_to_read_error: null,
     meta: null,
     links: null,
+    error: null,
+    message: null,
     current_page: 1
 };
 
@@ -41,13 +43,16 @@ export const mutations = {
         state.user_want_to_reads = want_to_reads;
     },
     REMOVE_WANT_TO_READS(state, book_id) {
-        state.want_to_reads = state.want_to_reads.filter(b=>b.id!=book_id);
+        state.want_to_reads = state.want_to_reads.filter(b => b.id != book_id);
     },
     SET_LOADING(state, want_to_read_loading) {
         state.want_to_read_loading = want_to_read_loading;
     },
     SET_ERROR(state, want_to_read_error) {
         state.want_to_read_error = want_to_read_error;
+    },
+    SET_MESSAGE(state, message) {
+        state.message = message;
     },
     CLEAR_WANT_TO_READS(state) {
         state.want_to_reads = [];
@@ -95,10 +100,13 @@ export const actions = {
         });
     },
     removeWantToRead({ commit }, payload) {
-        commit("REMOVE_WANT_TO_READS",payload.book_id)
+        commit("REMOVE_WANT_TO_READS", payload.book_id)
     },
-    setError({ commit }, message) {
-        commit("SET_ERROR", message)
+    setError({ commit }, error) {
+        commit("SET_ERROR", error)
+    },
+    setMessage({ commit }, message) {
+        commit("SET_MESSAGE", message)
     },
     setLoading({ commit }, isLoading) {
         commit("SET_LOADING", isLoading)
@@ -134,5 +142,11 @@ export const getters = {
     },
     current_page: (state) => {
         return state.current_page;
+    },
+    error: (state) => {
+        return state.error;
+    },
+    message: (state) => {
+        return state.message;
     },
 };

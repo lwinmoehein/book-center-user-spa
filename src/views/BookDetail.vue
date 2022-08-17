@@ -1,7 +1,7 @@
 <template>
     <div>
         <Loading :isLoading="loading || want_to_read_loading" />
-        <FlashMessage :error="error" />
+        <FlashMessage :error="error" :message="message" />
         <transition name="fade" mode="out-in">
             <div v-if="!loading && book != null" class="p-2">
                 <div class="flex mb-5 p-3">
@@ -64,7 +64,7 @@ export default {
     computed: {
         ...mapGetters(
             "bookDetail", [
-            "loading", "error", "book"
+            "loading", "error", "book", "message"
         ]),
         ...mapGetters("wantToRead",
             [
@@ -74,7 +74,7 @@ export default {
                 "want_to_read_error"
             ]),
         isInToRead() {
-            if (this.user_want_to_reads.length<=0) return false;
+            if (this.user_want_to_reads.length <= 0) return false;
 
             return true;
         }
@@ -92,9 +92,16 @@ export default {
         },
         toggleWantToRead() {
             if (this.isInToRead) {
-                WantToReadService.deleteWantToRead({ book_id: this.book.id }).then(this.getWantToReads())
+                WantToReadService.deleteWantToRead({ book_id: this.book.id }).then(() => {
+                    this.getWantToReads();
+                    this.$store.dispatch("bookDetail/setMessage","Removed from want to read list.");
+
+                });
             } else {
-                WantToReadService.storeWantToRead({ book_id: this.book.id }).then(this.getWantToReads())
+                WantToReadService.storeWantToRead({ book_id: this.book.id }).then(() => {
+                    this.getWantToReads();
+                    this.$store.dispatch("bookDetail/setMessage", "Added to want to read list.");
+                });
             }
 
         },
