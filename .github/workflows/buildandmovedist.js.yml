@@ -18,8 +18,9 @@ jobs:
 
       - name: Archive production artifacts
         uses: actions/upload-artifact@v3
+      - run: mv dist docs
         with:
-          name: dist
+          name: docs
           path: |
-            dist
+            docs
    
