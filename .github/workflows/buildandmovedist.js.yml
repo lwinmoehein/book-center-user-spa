@@ -14,14 +14,12 @@ jobs:
         with:
           node-version: '18.x'
       - run: npm install --legacy-peer-deps
-      - run: export NODE_OPTIONS=--openssl-legacy-provider  npm run build
-
-      - run: mv dist docs
-      - name: Archive production artifacts
-        uses: actions/upload-artifact@v3
+     
+      - uses: actions/checkout@v1
+      - uses: sterlingwes/gh-pages-deploy-action@v1.1
         with:
-          name: github-pages
-          path: |
-            docs
+          access-token: ${{ secrets.ACCESS_TOKEN }}
+          source-directory: dist
+          build-command: export NODE_OPTIONS=--openssl-legacy-provider  npm run build
 
    
