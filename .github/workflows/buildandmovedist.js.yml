@@ -16,11 +16,12 @@ jobs:
       - run: npm install --legacy-peer-deps
       - run: export NODE_OPTIONS=--openssl-legacy-provider  npm run build
 
+      - run: mv dist docs
       - name: Archive production artifacts
         uses: actions/upload-artifact@v3
         with:
           name: docs
           path: |
-            dist
+            docs
 
    
