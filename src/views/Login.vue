@@ -6,7 +6,7 @@
       <router-link
         to="/register"
         class="text-pink-500 transition hover:text-pink-600"
-        >Register for an account</router-link
+        >Register</router-link
       >
     </p>
   </div>
