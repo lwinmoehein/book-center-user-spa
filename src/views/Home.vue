@@ -4,7 +4,7 @@
       <h1
         class="mb-2 text-6xl font-bold text-transparent bg-gradient-to-r bg-clip-text from-blue-500 to-green-500"
       >
-        Hi there book lover.
+        Hi there book lover...
       </h1>
       <p class="font-bold">
         You can register for an account
