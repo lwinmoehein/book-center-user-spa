@@ -13,7 +13,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '16.x'
-      - run: npm install --legacy-peer-deps
+      - run: npm install
      
       - uses: actions/checkout@v1
       - uses: sterlingwes/gh-pages-deploy-action@v1.1
