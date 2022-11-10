@@ -2,7 +2,7 @@ import * as API from "@/services/API";
 
 export default {
   getMessages(page) {
-    return API.apiClient.get(`/messages/?page=${page}`);
+    return API.apiClient.get(`/messages?page=${page}`);
   },
   postMessage(payload) {
     return API.apiClient.post("/messages", payload);

@@ -2,13 +2,13 @@ import * as API from "@/services/API";
 
 export default {
   getAllCategories(page) {
-    return API.apiClient.get(`/categories/?page=${page}`);
+    return API.apiClient.get(`/categories?page=${page}`);
   },
   getCategory(id) {
     return API.apiClient.get(`/categories/${id}`);
   },
   getWantToReads(payload) {
-    return API.apiClient.get(`/want-to-reads/?page=${payload.page}`);
+    return API.apiClient.get(`/want-to-reads?page=${payload.page}`);
   },
   getWantToRead(payload) {
     return API.apiClient.get(`/want-to-reads/${payload.book_id}`);
