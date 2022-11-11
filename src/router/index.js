@@ -115,6 +115,15 @@ const routes = [
       ),
   },
   {
+    path: "/verification-notice",
+    name: "forgotPassword",
+    meta: { middleware: [guest] },
+    component: () =>
+      import(
+        /* webpackChunkName: "forgot-password" */ "../views/VerificationNotice"
+      ),
+  },
+  {
     path: "/:catchAll(.*)",
     name: "notFound",
     component: () =>

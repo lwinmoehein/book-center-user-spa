@@ -1,14 +1,16 @@
 <template>
-  <div class="max-w-lg p-5 m-auto">
-    <article class="p-5">
+  <div class="max-w-lg p-2 m-auto">
+    <article class="p-3">
       <h1
         class="mb-2 text-6xl font-bold text-transparent bg-gradient-to-r bg-clip-text from-blue-500 to-green-500"
       >
-        Hi there book lover...
+        Welcome from Tech Books Center...
+        <pre>{{authUser}}</pre>
       </h1>
+      <div class="mb-5"></div>
       <p class="font-bold">
-        You can register for an account
-        <router-link to="/register" class="base-link">here</router-link>.
+        Login from
+        <router-link to="/login" class="base-link">here</router-link>.
       </p>
     </article>
 
@@ -16,7 +18,17 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
   name: "Home",
+  computed:{
+    ...mapGetters("auth", ["authUser", "isAdmin"])
+  },
+  created(){
+    if(this.authUser){
+      this.$router.push('dashboard')
+    }
+  }
 };
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <header class="p-2 text-white bg-blue-400 bottom-0 fixed left-0 right-0 h-12 flex items-center">
+  <header class="p-2 text-white bg-blue-400 bottom-0 fixed left-0 right-0 h-12 flex items-center" v-if="authUser.email">
     <nav class="container flex items-center mx-auto">
       <div class="flex-1 flex  justify-center">
         <router-link to="/dashboard" class="flex justify-center items-center" :class="{ 'text-green-700': isHome }">

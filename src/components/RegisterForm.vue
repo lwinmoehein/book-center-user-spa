@@ -68,7 +68,7 @@ export default {
         password_confirmation: this.passwordConfirm,
       };
       AuthService.registerUser(payload)
-        .then(() => this.$router.push("/dashboard"))
+        .then(() => this.$router.push("/verification-notice"))
         .catch((error) => (this.error = getError(error)));
     },
   },

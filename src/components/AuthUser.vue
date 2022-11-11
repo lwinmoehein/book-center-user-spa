@@ -11,22 +11,23 @@
     <ul>
       <li class="mb-1 font-bold">{{ authUser.name }}</li>
       <li>Email: {{ authUser.email }}</li>
-      <li v-if="authUser.emailVerified" class="text-gray-500">
+      <li v-if="authUser.emailVerified" class="text-green-500">
         Emailed Verified
       </li>
+      <li v-else class="text-gray-500">
+        We've sent you an verification link via email.Please click and verify account.
+      </li>
     </ul>
-    <VerifyEmail v-if="!authUser.emailVerified" class="mt-4" />
   </div>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
-import VerifyEmail from "@/components/VerifyEmail";
 
 export default {
   name: "AuthUser",
   components: {
-    VerifyEmail,
+    
   },
   computed: {
     ...mapGetters("auth", ["authUser"]),
