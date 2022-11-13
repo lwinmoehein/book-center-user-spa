@@ -2,32 +2,33 @@
     <div>
         <Loading :isLoading="want_to_read_loading" />
 
-        <div class="p-3 mb-3">
+        <div class="p-3 mb-3 sticky top-0 left-0 bg-white">
             <p class="font-bold text-blue-800 text-xl mb-2">Want to Reads</p>
             <hr />
         </div>
         <div class="flex w-full h-full p-2">
 
-        <FlashMessage :error="want_to_read_error" :message="message" />
+            <FlashMessage :error="want_to_read_error" :message="message" />
 
-        <transition name="fade" mode="out-in">
-            <div v-if="want_to_reads.length > 0" class="flex flex-col gap-3 w-full h-full" @scroll="onScroll"
-                ref="wantToReadPagination">
-                <HorizontalBook @on-book-remove-clicked="removeWantToRead" @on-book-clicked="onBookClicked"
-                    class="w-full h-40" v-for="book in want_to_reads" :book="book" :key="book.id" />
+            <transition name="fade" mode="out-in">
+                <div v-if="want_to_reads.length > 0"
+                    class="flex flex-col gap-3 w-full h-full lg:w-2/4 md:flex-row md:flex-wrap lg:justify-items-center" @scroll="onScroll"
+                    ref="wantToReadPagination">
+                    <HorizontalBook @on-book-remove-clicked="removeWantToRead" @on-book-clicked="onBookClicked"
+                        class="w-full h-40" v-for="book in want_to_reads" :book="book" :key="book.id" />
+                </div>
+            </transition>
+            <transition name="fade">
+                <FlashMessage :error="want_to_read_error" v-if="want_to_read_error" key="want_to_read_error" />
+            </transition>
+            <div v-if="!want_to_read_loading && want_to_reads.length <= 0"
+                class="w-full h-full flex flex-col items-center justify-center mt-60 font-semibold">
+                <div>Please add some of your favorite books</div>
+                <div>To enjoy them later :)</div>
             </div>
-        </transition>
-        <transition name="fade">
-            <FlashMessage :error="want_to_read_error" v-if="want_to_read_error" key="want_to_read_error" />
-        </transition>
-        <div v-if="!want_to_read_loading && want_to_reads.length <= 0"
-            class="w-full h-full flex flex-col items-center justify-center mt-60 font-semibold">
-            <div>Please add some of your favorite books</div>
-            <div>To enjoy them later :)</div>
         </div>
     </div>
-    </div>
-   
+
 </template>
 
 <script>

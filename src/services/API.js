@@ -7,7 +7,7 @@ import axios from "axios";
 import store from "@/store";
 
 export const apiClient = axios.create({
-  baseURL: "http://api.books.com" + "/api",
+  baseURL: "https://polar-island-51022.herokuapp.com" + "/api",
   withCredentials: true, // required to handle the CSRF token
 });
 

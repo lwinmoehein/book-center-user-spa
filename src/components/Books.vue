@@ -1,16 +1,16 @@
 <template>
 
   <div class="h-full">
-    <Loading v-if="loading && !(books.length>0 || recommended_books.length>0)" :isLoading="true"/>
+    <Loading v-if="loading && !(books.length > 0 || recommended_books.length > 0)" :isLoading="true" />
     <transition v-else name="fade" mode="out-in">
       <div class="p-2">
-        <div class="p-3 mb-3">
-            <p class="font-bold text-blue-800 text-xl mb-2">Home</p>
-            <hr/>
+        <div class="p-3 mb-3 sticky top-0 left-0 bg-white">
+          <p class="font-bold text-blue-800 text-xl mb-2">Home</p>
+          <hr />
         </div>
-        <div>
+        <div class="">
           <div
-            class="flex flex-nowrap text-center overflow-scroll sticky top-0 bg-white  gap-5 border-gray-300 scrollbar-hide">
+            class="flex flex-nowrap text-center overflow-scroll sticky top-0 md:relative bg-white  gap-5 border-gray-300 scrollbar-hide">
             <div @click="onLanguageTabClicked(language)" v-for="language in all_languages" :key="language.id"
               class="focus-within:pt-3 flex-grow w-20 flex-none cursor-pointer flex justify-center">
               <div class="border-b-2 pl-2 pr-2 font-bold"
@@ -21,15 +21,15 @@
 
           </div>
 
-          <div class="p-3">
+          <div class="p-3 md:flex-col md:items-center w-full">
             <div class="flex justify-between mt-5 mb-2">
               <div class="font-bold">Popular Books</div>
-              <font-awesome-icon icon="fa-solid fa-arrow-right" />
             </div>
 
-            <div v-if="books.length > 0" class="flex flex-row overflow-scroll h-60 gap-3 bg-scroll scrollbar-hide"
+            <div v-if="books.length > 0"
+              class="flex flex-row overflow-scroll h-60 md:h-96 gap-3 md:gap-16 bg-scroll scrollbar-hide"
               :class="{ 'animate-pulse': isTopBooksFetching }" ref="topBookScroller" @scroll="onPopularBooksScroll">
-              <Book class="w-24" v-for="book in books" :key="book.id" :book="book"
+              <Book class="w-24 md:w-48" v-for="book in books" :key="book.id" :book="book"
                 @on-book-clicked="onBookClicked(book)">
               </Book>
               <div class="pr-6 pl-6 flex items-center justify-center">
@@ -52,13 +52,12 @@
               <div class="font-bold">
                 Recommended Books
               </div>
-              <font-awesome-icon icon="fa-solid fa-arrow-right" />
             </div>
             <div v-if="recommended_books.length > 0"
-              class="flex flex-row overflow-scroll h-60 gap-3 bg-scroll scrollbar-hide"
+              class="flex flex-row overflow-scroll h-60  md:h-96 gap-3  md:gap-16 bg-scroll scrollbar-hide"
               :class="{ 'animate-pulse': isRecommendedBooksFetching }" ref="recommendedBookScroller"
               @scroll="onRecommendedBooksScroll">
-              <Book class="w-24" v-for="book in recommended_books" :key="'rec' + book.id" :book="book"
+              <Book class="w-24 md:w-48" v-for="book in recommended_books" :key="'rec' + book.id" :book="book"
                 @on-book-clicked="onBookClicked(book)"></Book>
               <div class="pr-6 pl-6 flex items-center justify-center">
                 <div class="mb-10 text-blue-500" v-if="this.current_recommended_page == recommended_meta.last_page">

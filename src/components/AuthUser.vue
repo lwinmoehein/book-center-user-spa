@@ -1,5 +1,5 @@
 <template>
-  <div v-if="authUser">
+  <div v-if="authUser" class="lg:w-1/2">
     <ul>
       <li class="mb-1"><span class="font-bold">{{ authUser.name }}</span></li>
       <li><span class="font-bold">{{ authUser.email }}</span></li>

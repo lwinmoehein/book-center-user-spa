@@ -8,8 +8,8 @@
                     <font-awesome-icon @click="goBack" icon="fa-solid fa-arrow-left" class="font-bold text-xl mr-3" />
                     <div> {{ category.name }} </div>
                 </div>
-                <div class="grid gap-2 grid-cols-3">
-                    <Book @on-book-clicked="onBookClicked" class="h-52" v-for="book in books" :key="book.id"
+                <div class="grid gap-2 grid-cols-3 md:grid-cols-4 lg:grid-cols-8">
+                    <Book @on-book-clicked="onBookClicked" class="h-64 md:h-96" v-for="book in books" :key="book.id"
                         :book="book"></Book>
                 </div>
             </div>

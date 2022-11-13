@@ -9,9 +9,9 @@
         <transition name="fade" mode="out-in">
             <div class="grid grid-cols-2 gap-3 auto-rows-fr p-2">
 
-                <div class="p-3 flex justify-center items-center box-decoration-slice bg-gradient-to-r from-blue-400 to-green-500 text-white"
+                <div class="p-3 md:h-24 flex justify-center items-center box-decoration-slice bg-gradient-to-r from-blue-400 to-green-500 text-white"
                     @click="onCategoryClicked(category)" v-for="category in all_categories" :key="category.id">
-                    <span>{{ category.name }}</span>
+                    <span class="font-extrabold">{{ category.name }}</span>
                 </div>
             </div>
         </transition>

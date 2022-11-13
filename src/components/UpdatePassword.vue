@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="updatePassword">
+  <form @submit.prevent="updatePassword" class="lg:w-1/2">
     <div class="mb-2">
       <label for="password" class="text-sm text-gray-500"
         >Current Password</label

@@ -1,6 +1,7 @@
 <template>
   <button type="button" @click="logout"
     class="
+    lg:w-1/2
     text-white
      bg-red-700
       hover:bg-red-800
