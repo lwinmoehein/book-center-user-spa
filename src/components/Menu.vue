@@ -1,6 +1,6 @@
 <template>
-  <header class="p-2 text-white bg-blue-400 bottom-0 fixed left-0 right-0 h-12 flex items-center" v-if="authUser">
-    <nav class="container flex items-center mx-auto">
+  <header class="p-2 text-white bg-blue-400 flex bottom-0 fixed left-0 right-0 md:top-0 md:h-full h-12  items-center" v-if="authUser">
+    <nav class="container flex items-center md:items-start mx-auto  md:flex-col">
       <div class="flex-1 flex  justify-center">
         <router-link to="/dashboard" class="flex justify-center items-center" :class="{ 'text-green-700': isHome }">
           <font-awesome-icon icon="fa-solid fa-house" class="text-lg self-center" />

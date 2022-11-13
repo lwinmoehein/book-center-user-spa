@@ -1,9 +1,9 @@
 <template>
   <div id="app">
-    <main class="container mb-20">
+    <main class="container mb-20 md:ml-40 lg:ml-96 md:w-4/6 lg:h-4/6 md:p-5">
       <router-view />
     </main>
-    <Menu v-if="isLoggedIn" :authUser="authUser"/>
+    <Menu class="md:w-1/6" v-if="isLoggedIn" :authUser="authUser"/>
   </div>
 </template>
 
