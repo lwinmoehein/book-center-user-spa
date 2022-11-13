@@ -4,16 +4,19 @@
     <Loading v-if="loading && !(books.length>0 || recommended_books.length>0)" :isLoading="true"/>
     <transition v-else name="fade" mode="out-in">
       <div class="p-2">
+        <div class="p-3 mb-3">
+            <p class="font-bold text-blue-800 text-xl mb-2">Home</p>
+            <hr/>
+        </div>
         <div>
           <div
-            class="flex flex-nowrap text-center overflow-scroll sticky top-0 bg-white border-b-2 gap-5 border-gray-300 scrollbar-hide">
+            class="flex flex-nowrap text-center overflow-scroll sticky top-0 bg-white  gap-5 border-gray-300 scrollbar-hide">
             <div @click="onLanguageTabClicked(language)" v-for="language in all_languages" :key="language.id"
               class="focus-within:pt-3 flex-grow w-20 flex-none cursor-pointer flex justify-center">
               <div class="border-b-2 pl-2 pr-2 font-bold"
                 :class="{ 'border-blue-400 text-blue-600': current_tab == language.id }">
                 {{ language.name }}
               </div>
-
             </div>
 
           </div>
@@ -106,8 +109,6 @@ export default {
   },
   created() {
     if (this.books.length > 0) return;
-
-    this.getAuthInfoAndReroute();
     this.$store.dispatch("language/getLanguages");
     this.updateTopBooks();
     this.updateRecommendedBooks();
@@ -119,21 +120,6 @@ export default {
     }
   },
   methods: {
-    async getAuthInfoAndReroute() {
-      const authUser = await this.$store.dispatch("auth/getAuthUser");
-      if (authUser) {
-        if (authUser.categories_count == 0) {
-          console.log("updating");
-          this.$router.push("/update-category");
-        }
-      } else {
-        const error = Error(
-          "Unable to fetch user after login, check your API settings."
-        );
-        error.name = "Fetch User";
-        throw error;
-      }
-    },
     onLanguageTabClicked(language) {
       this.$store.dispatch("book/setCurrentTab", language.id);
       this.$store.dispatch("book/setCurrentTopPage", 1);

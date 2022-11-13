@@ -24,12 +24,11 @@
                             Average Rating <span class="text-blue-500">{{Number(book.average_rating).toFixed(1)}}</span>
                         </div>
                         <div class="flex mt-3">
-                            <button @click="toggleWantToRead" class="pl-2 pr-2 pt-1 pb-1  text-white"
+                            <button @click="toggleWantToRead" class="pl-2 pr-2 pt-1 pb-1  text-white rounded-md"
                                 :class="{ 'bg-green-500': isInToRead, 'bg-blue-400': !isInToRead }">
                                 <span class="mr-2">Want To Read</span>
                                 <font-awesome-icon v-if="isInToRead" icon="fa-solid fa-check" />
-                                <font-awesome-icon v-else icon="fa-solid fa-plus" />
-
+                                <font-awesome-icon v-else icon="fa-solid fa-plus" />   
                             </button>
                         </div>
                     </div>
@@ -68,7 +67,8 @@ export default {
         ...mapGetters(
             "bookDetail", [
             "loading", "error", "book", "message"
-        ]),
+        ],
+        "auth"),
         ...mapGetters("wantToRead",
             [
                 "want_to_reads",

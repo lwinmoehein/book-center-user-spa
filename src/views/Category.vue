@@ -2,6 +2,10 @@
     <div class="h-full">
         <Loading :isLoading="loading"/>
 
+        <div class="p-3 mb-3">
+            <p class="font-bold text-blue-800 text-xl mb-2">Available Categories </p>
+            <hr/>
+            </div>
         <transition name="fade" mode="out-in">
             <div class="grid grid-cols-2 gap-3 auto-rows-fr p-2">
 

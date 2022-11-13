@@ -1,6 +1,12 @@
 <template>
-    <div class="flex w-full h-full">
+    <div>
         <Loading :isLoading="want_to_read_loading" />
+
+        <div class="p-3 mb-3">
+            <p class="font-bold text-blue-800 text-xl mb-2">Want to Reads</p>
+            <hr />
+        </div>
+        <div class="flex w-full h-full p-2">
 
         <FlashMessage :error="want_to_read_error" :message="message" />
 
@@ -20,6 +26,8 @@
             <div>To enjoy them later :)</div>
         </div>
     </div>
+    </div>
+   
 </template>
 
 <script>
@@ -47,8 +55,8 @@ export default {
         ])
     },
     created() {
-        if(this.want_to_reads.length>0) return;
-        
+        if (this.want_to_reads.length > 0) return;
+
         this.$store.dispatch("wantToRead/setCurrentPage", 1);
         this.$store.dispatch("wantToRead/clearWantToReads");
 

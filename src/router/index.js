@@ -116,7 +116,7 @@ const routes = [
   },
   {
     path: "/verification-notice",
-    name: "forgotPassword",
+    name: "verificationNotice",
     meta: { middleware: [guest] },
     component: () =>
       import(

@@ -14,6 +14,7 @@
       v-model="email"
       autocomplete="email"
       placeholder="luke@jedi.com"
+      :is-disabled="true"
       class="mb-4"
     />
     <BaseBtn type="submit" text="Update" />

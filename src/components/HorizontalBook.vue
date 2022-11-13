@@ -6,7 +6,7 @@
             <img class="h-44 w-36 rounded-md object-cover flex-none" :src="book.cover_url" alt="">
             <div class="p-2 w-full">
                 <div class="font-semibold">{{ book.title.substring(0, 20) }}</div>
-                <div class="text-blue-500">{{ book.price }}</div>
+                <div class="text-blue-500">{{ book.price }} Ks</div>
                 <div>
                     <div class="flex gap-1 overflow-hidden">
                         <div class="p-1 text-xs" v-for="(author, index) in book.authors" :key="author.id">
@@ -15,9 +15,9 @@
                     </div>
                 </div>
                 <div>
-                    <button @click.stop="$emit('on-book-remove-clicked', book)" class="pl-1 rounded-sm pr-1 border-red-400 border-2 ">
+                    <button @click.stop="$emit('on-book-remove-clicked', book)" class="rounded-md bg-red-400 border-2 text-white px-5 py-1">
                         <span class="mr-2">Remove</span>
-                        <font-awesome-icon icon="fa-solid fa-trash-can" class="text-black" />
+                        <font-awesome-icon icon="fa-solid fa-trash-can" />
                     </button>
                 </div>
             </div>
