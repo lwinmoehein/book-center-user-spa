@@ -6,7 +6,7 @@
             <img class="h-44 w-36 rounded-md object-cover flex-none" :src="book.cover_url" alt="">
             <div class="p-2 w-full">
                 <div class="font-semibold">{{ book.title.substring(0, 20) }}</div>
-                <div class="text-blue-500">{{ book.price }} Ks</div>
+                <div class="text-blue-500">{{ book.price }} AED</div>
                 <div>
                     <div class="flex gap-1 overflow-hidden">
                         <div class="p-1 text-xs" v-for="(author, index) in book.authors" :key="author.id">
