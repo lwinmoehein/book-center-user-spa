@@ -17,10 +17,7 @@
       class="mb-4"
     />
     <div class="flex justify-between">
-      <BaseBtn type="submit" text="Login" />
-      <router-link to="/forgot-password" class="text-sm base-link">
-        Forgot your password?
-      </router-link>
+      <BaseBtn class="w-full" type="submit" text="Login" />
     </div>
     <FlashMessage :error="error" :isLoggedIn="false" />
   </form>

@@ -1,6 +1,9 @@
 <template>
   <div id="app">
-    <main class="container md:ml-52  md:w-auto md:h-full">
+    <main v-if="isLoggedIn" class="container md:ml-52  md:w-auto md:h-full">
+      <router-view />
+    </main>
+    <main v-else class="container  md:w-auto md:h-full">
       <router-view />
     </main>
     <Menu class="md:w-52" v-if="isLoggedIn" :authUser="authUser"/>

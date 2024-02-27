@@ -30,7 +30,7 @@
       v-model="passwordConfirm"
       class="mb-4"
     />
-    <BaseBtn type="submit" text="Register" />
+    <BaseBtn class="w-full" type="submit" text="Register" />
     <FlashMessage :error="error" />
   </form>
 </template>
