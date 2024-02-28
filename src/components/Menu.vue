@@ -1,24 +1,23 @@
 <template>
-  <header class="p-2 md:p-10 text-white bg-blue-400 flex bottom-0 fixed left-0 right-0 md:top-0 md:h-full h-12  items-center" v-if="authUser">
+  <header class="p-2 md:p-10 text-gray-100 bg-blue-400 flex bottom-0 fixed left-0 right-0 md:top-0 md:h-full h-12  items-center" v-if="authUser">
     <nav class="container flex items-center md:items-start mx-auto md:gap-6  md:flex-col">
       <div class="flex-1 flex  justify-center">
-        <router-link to="/dashboard" class="flex justify-center items-center" :class="{ 'text-green-700': isHome }">
+        <router-link to="/dashboard" class="flex justify-center items-center" :class="{ 'text-white font-bold': isHome }">
           <font-awesome-icon icon="fa-solid fa-house" class="text-lg self-center" />
           <p class="ml-1">Home</p>
         </router-link>
       </div>
       <div class="flex-1 flex  justify-center">
 
-        <router-link to="/category" class="flex justify-center items-center" :class="{ 'text-green-700': isCategories }">
-          <font-awesome-icon icon="fa-solid fa-book" class="text-lg" />
+        <router-link to="/category" class="flex justify-center items-center" :class="{ 'text-white font-bold': isCategories }">
+          <font-awesome-icon icon="fa-solid fa-list" class="text-lg" />
           <p class="ml-1">Categories</p>
-
         </router-link>
       </div>
       <div class="flex-1 flex  justify-center">
 
-        <router-link to="/want-to-read" class="flex justify-center items-center" :class="{ 'text-green-700': isWantToRead }">
-          <font-awesome-icon icon="fa-solid fa-book" class="text-lg" />
+        <router-link to="/want-to-read" class="flex justify-center items-center" :class="{ 'text-white font-bold': isWantToRead }">
+          <font-awesome-icon icon="fa-solid fa-book-bookmark" class="text-lg" />
           <p class="ml-1">Saved</p>
 
         </router-link>
@@ -26,7 +25,7 @@
       <div class="flex-1 flex  justify-center">
 
         <router-link to="/user" class="flex justify-center items-center"
-          :class="{ 'text-green-700': currentRoute == 'user' }">
+          :class="{ 'text-white font-bold': currentRoute == 'user' }">
           <font-awesome-icon icon="fa-solid fa-gears" class="text-lg" />
           <p class="ml-1">Settings</p>
 

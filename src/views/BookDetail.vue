@@ -24,9 +24,9 @@
                             Average Rating <span class="text-blue-500">{{Number(book.average_rating).toFixed(1)}}</span>
                         </div>
                         <div class="flex mt-3">
-                            <button @click="toggleWantToRead" class="pl-2 pr-2 pt-1 pb-1  text-white rounded-md"
+                            <button @click="toggleWantToRead" class="pl-2 pr-2  pb-1  text-white rounded-md"
                                 :class="{ 'bg-green-500': isInToRead, 'bg-blue-400': !isInToRead }">
-                                <span class="mr-2">Want To Read</span>
+                                <span class="mr-2 text-sm">{{isInToRead?'Saved':'Save Book'}}</span>
                                 <font-awesome-icon v-if="isInToRead" icon="fa-solid fa-check" />
                                 <font-awesome-icon v-else icon="fa-solid fa-plus" />   
                             </button>
@@ -97,13 +97,13 @@ export default {
             if (this.isInToRead) {
                 WantToReadService.deleteWantToRead({ book_id: this.book.id }).then(() => {
                     this.getWantToReads();
-                    this.$store.dispatch("bookDetail/setMessage","Removed from want to read list.");
+                    this.$store.dispatch("bookDetail/setMessage","Removed from saved list.");
 
                 });
             } else {
                 WantToReadService.storeWantToRead({ book_id: this.book.id }).then(() => {
                     this.getWantToReads();
-                    this.$store.dispatch("bookDetail/setMessage", "Added to want to read list.");
+                    this.$store.dispatch("bookDetail/setMessage", "Added to saved list.");
                 });
             }
 
