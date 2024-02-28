@@ -4,13 +4,14 @@
     <Loading v-if="loading && !(books.length > 0 || recommended_books.length > 0)" :isLoading="true" />
     <transition v-else name="fade" mode="out-in">
       <div class="p-2">
-        <div class="p-3 mb-3 sticky top-0 left-0 bg-white">
+        <div class="p-3 mb-3 top-0 left-0">
           <p class="font-bold text-blue-800 text-xl mb-2">Home</p>
           <hr />
         </div>
         <div class="">
           <div
-            class="flex flex-nowrap text-center overflow-scroll sticky top-0 md:relative bg-white  gap-5 border-gray-300 scrollbar-hide">
+            class="flex flex-nowrap text-center overflow-scroll sticky top-0 md:relative gap-5 border-gray-300 scrollbar-hide"
+          >
             <div @click="onLanguageTabClicked(language)" v-for="language in all_languages" :key="language.id"
               class="focus-within:pt-3 flex-grow w-20 flex-none cursor-pointer flex justify-center">
               <div class="border-b-2 pl-2 pr-2 font-bold"

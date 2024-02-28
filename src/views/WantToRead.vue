@@ -2,7 +2,7 @@
     <div>
         <Loading :isLoading="want_to_read_loading" />
 
-        <div class="p-3 mb-3 sticky top-0 left-0 bg-white">
+        <div class="p-3 mb-3 top-0 left-0">
             <p class="font-bold text-blue-800 text-xl mb-2">Want to Reads</p>
             <hr />
         </div>
