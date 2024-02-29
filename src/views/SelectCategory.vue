@@ -82,7 +82,7 @@ export default {
       this.error = null;
       try {
         CategoryService.updateCategories(payload)
-          .then(() => this.$router.push("/dashboard"))
+          .then(() => this.$router.push("/"))
           .catch((error) => (this.error = getError(error)));
       } catch (error) {
         this.error = getError(error);

@@ -27,7 +27,7 @@ export default {
   },
   created(){
     if(this.authUser){
-      this.$router.push('dashboard')
+      this.$router.push('')
     }
   }
 };

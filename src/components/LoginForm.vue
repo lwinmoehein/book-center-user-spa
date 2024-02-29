@@ -56,7 +56,7 @@ export default {
         const authUser = await this.$store.dispatch("auth/getAuthUser");
         if (authUser) {
           this.$store.dispatch("auth/setGuest", { value: "isNotGuest" });
-          this.$router.push("/dashboard");
+          this.$router.push("/");
         } else {
           const error = Error(
             "Unable to fetch user after login, check your API settings."

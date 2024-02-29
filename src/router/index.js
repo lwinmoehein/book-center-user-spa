@@ -12,12 +12,6 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: "/",
-    name: "home",
-    meta: { middleware: [guest] },
-    component: () => import(/* webpackChunkName: "home" */ "../views/Home"),
-  },
-  {
-    path: "/dashboard",
     name: "dashboard",
     meta: { middleware: [auth] },
     component: () =>

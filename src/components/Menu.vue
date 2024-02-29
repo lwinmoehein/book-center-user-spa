@@ -2,7 +2,7 @@
   <header class="p-2 md:p-10 text-gray-100 bg-blue-400 flex bottom-0 fixed left-0 right-0 md:top-0 md:h-full h-12  items-center" v-if="authUser">
     <nav class="container flex items-center md:items-start mx-auto md:gap-6  md:flex-col">
       <div class="flex-1 flex  justify-center">
-        <router-link to="/dashboard" class="flex justify-center items-center" :class="{ 'text-white font-bold': isHome }">
+        <router-link to="/" class="flex justify-center items-center" :class="{ 'text-white font-bold': isHome }">
           <font-awesome-icon icon="fa-solid fa-house" class="text-lg self-center" />
           <p class="ml-1">Home</p>
         </router-link>
