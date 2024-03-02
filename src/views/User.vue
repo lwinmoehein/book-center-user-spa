@@ -5,7 +5,7 @@
             <p class="font-bold text-blue-800 text-xl mb-2">Settings</p>
             <hr />
         </div>
-    <div class="grid grid-cols-1 gap-10 lg:justify-items-center">
+    <div class="grid grid-cols-1 gap-10 justify-center lg:px-2 lg:justify-items-start">
       <AuthUser class="p-5 border rounded " />
       <AuthUserForm class="p-5  border rounded " />
       <UpdatePassword class="p-5  border rounded " />

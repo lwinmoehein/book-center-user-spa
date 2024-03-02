@@ -38,6 +38,9 @@ export const mutations = {
     PAGINATE_BOOKS(state, books) {
         state.books = state.books.concat(books);
     },
+    CLEAR_BOOKS(state){
+        state.books = []
+    },
     SET_META(state, meta) {
         state.books_meta = meta;
     },
@@ -64,6 +67,7 @@ export const actions = {
     },
     getCategoryBooks({ commit }, payload) {
         commit("SET_LOADING", true);
+        commit("CLEAR_BOOKS");
         CategoryService.getCategoryBooks(payload)
             .then((response) => {
                 paginateBooks(commit, response);

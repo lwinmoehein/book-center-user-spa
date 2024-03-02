@@ -12,6 +12,7 @@
                     <Book @on-book-clicked="onBookClicked" class="h-64 md:h-96" v-for="book in books" :key="book.id"
                         :book="book"></Book>
                 </div>
+              <NoData class="mt-52" v-if="books.length<=0 && !loading"/>
             </div>
         </transition>
         <transition name="fade">
@@ -27,11 +28,12 @@ import { mapGetters } from "vuex";
 import FlashMessage from "@/components/FlashMessage";
 import Book from '@/components/Book';
 import Loading from "@/components/Loading";
+import NoData from "@/components/NoData.vue";
 
 
 export default {
     name: "CategoryDetail",
-    components: { FlashMessage, Book, Loading },
+    components: { NoData, FlashMessage, Book, Loading },
     computed: {
         ...mapGetters(
             "categoryDetail", [
@@ -47,10 +49,10 @@ export default {
         }
     },
     created() {
-        if(this.books.length>0) return;
+        //if(this.books.length>0) return;
         this.$store.dispatch("categoryDetail/getCategory", this.$route.params.id);
-
         this.getBooks();
+
         window.addEventListener("scroll", () => {
             this.onScroll();
         })
