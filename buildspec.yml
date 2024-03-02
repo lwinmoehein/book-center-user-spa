@@ -18,4 +18,8 @@ phases:
       - npm run build
   post_build:
     commands:
-      - echo Post Build
+      - echo Post Build Phase
+artifacts:
+  files:
+    - '**/*'
+  base-directory: 'dist'
