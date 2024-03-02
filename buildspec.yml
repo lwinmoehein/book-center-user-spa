@@ -18,4 +18,4 @@ phases:
       - npm run build
   post_build:
     commands:
-      - echo PostBuild Phase
+      - echo Post Build Phase
