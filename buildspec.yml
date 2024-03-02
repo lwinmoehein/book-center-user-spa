@@ -3,6 +3,7 @@ version: 0.2
 phases:
   install:
     commands:
+      - echo Install_NPM
       - npm i npm@latest -g
       - pip install --upgrade pip
       - pip install --upgrade awscli
