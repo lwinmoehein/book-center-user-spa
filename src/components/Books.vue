@@ -10,7 +10,7 @@
         </div>
         <div class="">
           <div
-            class="flex flex-nowrap text-center overflow-scroll sticky top-0 md:relative gap-5 border-gray-300 scrollbar-hide"
+            class="flex flex-nowrap text-center overflow-scroll top-0 md:relative gap-5 border-gray-300 scrollbar-hide"
           >
             <div @click="onLanguageTabClicked(language)" v-for="language in all_languages" :key="language.id"
               class="focus-within:pt-3 flex-grow w-20 flex-none cursor-pointer flex justify-center">
