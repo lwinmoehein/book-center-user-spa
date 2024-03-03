@@ -1,13 +1,19 @@
 <template>
-    <div>
+    <div class="mt-10">
+      <hr class="mb-5"/>
+      <div class="flex justify-between items-center">
+        <div class="px-2 font-semibold">Reviews</div>
         <ReviewInput v-if="!reviewed_user_ids.includes(authUser.id)" @on-review-input-clicked="postReview" />
+      </div>
+      <div>
         <div class="flex flex-col">
-            <Review v-for="review in book.reviews" @on-review-update="updateReview" @on-review-delete="deleteReview" :review="review"
-                :key="'r' + review.id" />
-            <div class="w-full h-20 flex justify-center items-center" v-if="book.reviews.length <= 0">
-                <div>No reviews yet.</div>
-            </div>
+          <Review v-for="review in book.reviews" @on-review-update="updateReview" @on-review-delete="deleteReview" :review="review"
+                  :key="'r' + review.id" />
+          <div class="w-full h-52 flex justify-center items-center" v-if="book.reviews.length <= 0">
+            <div>No reviews yet.</div>
+          </div>
         </div>
+      </div>
     </div>
 </template>
 

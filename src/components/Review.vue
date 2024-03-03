@@ -1,12 +1,12 @@
 <template>
     <div class="flex flex-none  flex-col p-2 mb-2 border-b">
         <div class="flex justify-between items-center">
-            <span class="flex-1 font-bold ">{{ review.user.name }}</span>
+            <span class="flex-1 font-semibold ">{{ review.user.name }}</span>
             <div class="flex-1 relative inline-block">
                 <font-awesome-icon v-if="isOwnReview" icon="fa-solid fa-ellipsis-v" class="absolute right-2"
                     @click="toggleMenu" />
                 <div v-if="isMenuOpened"
-                    class="z-10 mt-8 absolute w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700">
+                    class="z-10 mt-8 absolute w-44  rounded divide-y divide-gray-100 shadow dark:bg-gray-700">
                     <div class="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefault">
                         <div>
                             <div @click="onReviewEdit" href="#"

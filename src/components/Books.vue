@@ -33,12 +33,6 @@
               <Book class="w-24 md:w-48" v-for="book in books" :key="book.id" :book="book"
                 @on-book-clicked="onBookClicked(book)">
               </Book>
-              <div class="pr-6 pl-6 flex items-center justify-center">
-                <div class="mb-10 text-blue-500"
-                  v-if="this.current_top_page >= meta.last_page && !isTopBooksFetching && books.length > 0">
-                  No More Books!
-                </div>
-              </div>
             </div>
             <div v-if="!loading && books.length <= 0" class="h-52 flex justify-center items-center">
               <div class="text-blue-500">
@@ -58,13 +52,8 @@
               class="flex flex-row overflow-scroll h-60  md:h-96 gap-3  md:gap-16 bg-scroll scrollbar-hide"
               :class="{ 'animate-pulse': isRecommendedBooksFetching }" ref="recommendedBookScroller"
               @scroll="onRecommendedBooksScroll">
-              <Book class="w-24 md:w-48" v-for="book in recommended_books" :key="'rec' + book.id" :book="book"
+              <Book class="w-24 md:w-48 " v-for="book in recommended_books" :key="'rec' + book.id" :book="book"
                 @on-book-clicked="onBookClicked(book)"></Book>
-              <div class="pr-6 pl-6 flex items-center justify-center">
-                <div class="mb-10 text-blue-500" v-if="this.current_recommended_page == recommended_meta.last_page">
-                  No More Books
-                </div>
-              </div>
             </div>
             <div v-if="!loading && recommended_books.length <= 0" class="h-52 flex justify-center items-center">
               <div class="text-blue-500">

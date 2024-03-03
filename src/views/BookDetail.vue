@@ -4,13 +4,13 @@
         <FlashMessage :error="error" :message="message" />
         <transition name="fade" mode="out-in">
             <div v-if="!loading && book != null" class="p-2">
-                <div class="flex mb-5 p-3">
-                    <font-awesome-icon @click="goBack" icon="fa-solid fa-arrow-left" class="font-bold text-xl mr-3" />
+                <div class="flex mb-5 p-3 items-center">
+                    <font-awesome-icon @click="goBack" icon="fa-solid fa-arrow-left" class="font-bold text-xl mr-3 cursor-pointer" />
                     <div class="font-semibold"> {{ book.title.substring(0, 30) }} </div>
                 </div>
                 <div class="flex p-3 flex-row overflow-hidden">
                     <div class="mr-2">
-                        <img class="h-48 w-40 rounded-md object-cover flex-none" :src="book.cover_url" alt="">
+                        <img class="h-60 w-40 rounded-md object-cover flex-none" :src="book.cover_url" alt="">
 
                     </div>
                     <div class="flex flex-col">
@@ -24,7 +24,7 @@
                             Average Rating <span class="text-blue-500">{{Number(book.average_rating).toFixed(1)}}</span>
                         </div>
                         <div class="flex mt-3">
-                            <button @click="toggleWantToRead" class="pl-2 pr-2  pb-1  text-white rounded-md"
+                            <button @click="toggleWantToRead" class="px-2 flex items-center justify-center  font-bold text-white rounded-sm"
                                 :class="{ 'bg-green-500': isInToRead, 'bg-blue-400': !isInToRead }">
                                 <span class="mr-2 text-sm">{{isInToRead?'Saved':'Save Book'}}</span>
                                 <font-awesome-icon v-if="isInToRead" icon="fa-solid fa-check" />
@@ -38,13 +38,13 @@
                     <p>
                         {{ book.description }}
                     </p>
-                    <div class="font-semibold mt-5 mb-2">Categories:</div>
-                    <div class="flex flex-nowrap text-center overflow-scroll bg-white  gap-5 scrollbar-hide">
-                        <div class="bg-blue-400 pl-1 pr-1 flex-none rounded-md text-white"
+                    <div class="font-semibold mt-5 mb-2">Categories</div>
+                    <div class="flex flex-nowrap text-center overflow-scroll  gap-5 scrollbar-hide">
+                        <div class="bg-blue-400 px-2 flex-none rounded-sm text-sm text-white"
                             v-for="category in book.categories" :key="category.id">{{ category.name }}</div>
                     </div>
                 </div>
-                <div class="p-3">
+                <div class="py-3 px-1">
                     <Reviews :book="book" />
                 </div>
             </div>

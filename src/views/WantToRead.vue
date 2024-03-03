@@ -14,6 +14,7 @@
                 <div v-if="want_to_reads.length > 0"
                     class="flex flex-col gap-3 w-full h-full lg:w-2/4 md:flex-row md:flex-wrap lg:justify-items-center" @scroll="onScroll"
                     ref="wantToReadPagination">
+                    <hr/>
                     <HorizontalBook @on-book-remove-clicked="removeWantToRead" @on-book-clicked="onBookClicked"
                         class="w-full h-40" v-for="book in want_to_reads" :book="book" :key="book.id" />
                 </div>
@@ -56,7 +57,7 @@ export default {
         ])
     },
     created() {
-        if (this.want_to_reads.length > 0) return;
+        // if (this.want_to_reads.length > 0) return;
 
         this.$store.dispatch("wantToRead/setCurrentPage", 1);
         this.$store.dispatch("wantToRead/clearWantToReads");

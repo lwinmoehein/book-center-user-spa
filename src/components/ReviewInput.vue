@@ -1,8 +1,10 @@
 <template>
     <div>
-        <div class="flex justify-between mb-5 items-center">
-                <div class="font-semibold">Reviews:</div>
-         <div v-if="authUser.emailVerified" class="text-blue-500 font-semibold cursor-pointer rounded-md px-3 py-1 border-blue-500 border-2" @click="toggleDialog">Post Review</div>
+        <div class="flex justify-between items-center">
+                <div v-if="authUser.emailVerified" class="font-bold cursor-pointer rounded-sm px-3 bg-blue-500 text-white border-2 flex justify-center items-center gap-2" @click="toggleDialog">
+                  <div>Post Review</div>
+                  <font-awesome-icon icon="fa-solid fa-pencil" class="font-bold text-sm cursor-pointer" />
+                </div>
         </div>
         <ReviewDialog @on-review-confirm="onPostReviewClick" @on-dialog-close="onCloseDialogClicked" :isClosed="isDialogClosed"/>
     </div>
