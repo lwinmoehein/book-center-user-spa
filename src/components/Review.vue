@@ -1,28 +1,31 @@
 <template>
     <div class="flex flex-none  flex-col p-2 mb-2 border-b">
-        <div class="flex justify-between items-center">
-            <span class="flex-1 font-semibold ">{{ review.user.name }}</span>
-            <div class="flex-1 relative inline-block">
-                <font-awesome-icon v-if="isOwnReview" icon="fa-solid fa-ellipsis-v" class="absolute right-2"
-                    @click="toggleMenu" />
-                <div v-if="isMenuOpened"
-                    class="z-10 mt-8 absolute w-44  rounded divide-y divide-gray-100 shadow dark:bg-gray-700">
-                    <div class="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefault">
-                        <div>
-                            <div @click="onReviewEdit" href="#"
-                                class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                                Edit</div>
-                        </div>
-                        <div>
-                            <div @click="onReviewDelete" href="#"
-                                class="block text-red-500 py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 ">Delete
-                            </div>
-                        </div>
-                    </div>
+      <div class="flex justify-between items-center">
+        <span class="flex-1 font-semibold">{{ review.user.name }}</span>
+        <div class="relative">
+          <font-awesome-icon v-if="isOwnReview" icon="fa-solid fa-ellipsis-v" class="cursor-pointer absolute right-2"
+                             @click="toggleMenu" />
+          <div v-if="isMenuOpened"
+               class="z-10 mt-8 absolute right-0 w-44 rounded divide-y divide-gray-100 shadow bg-gray-100">
+            <div class="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefault">
+              <div>
+                <div @click="onReviewEdit" href="#"
+                     class="cursor-pointer text-sm block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600">
+                  Edit
                 </div>
+              </div>
+              <hr />
+              <div>
+                <div @click="onReviewDelete" href="#"
+                     class="cursor-pointer text-sm block text-red-500 py-2 px-4 hover:bg-gray-100">Delete
+                </div>
+              </div>
             </div>
+          </div>
         </div>
-        <div>
+      </div>
+
+      <div>
             <div class="flex ">
                 <font-awesome-icon v-for="s in review.star" :key="'star' + s" icon="fa-solid fa-star"
                     class="text-blue-500" />
