@@ -3,7 +3,7 @@
   <div class="h-full">
     <Loading v-if="loading && !(books.length > 0 || recommended_books.length > 0)" :isLoading="true" />
     <transition v-else name="fade" mode="out-in">
-      <div class="p-2">
+      <div>
         <div class="p-3 mb-3 top-0 left-0">
           <p class="font-bold text-blue-800 text-xl mb-2">Home</p>
           <hr />

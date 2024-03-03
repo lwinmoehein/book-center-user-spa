@@ -16,11 +16,11 @@
                     <div class="flex flex-col">
                         <div class="font-semibold">{{ book.title.substring(0, 30) }}</div>
                         <div class="flex flex-wrap gap-1 overflow-hidden">
-                            <div class="p-1 text-xs" v-for="author in book.authors" :key="author.id">
+                            <div class="text-xs" v-for="author in book.authors" :key="author.id">
                                 {{ author.name }}
                             </div>
                         </div>
-                        <div>
+                        <div class="text-sm">
                             Average Rating <span class="text-blue-500">{{Number(book.average_rating).toFixed(1)}}</span>
                         </div>
                         <div class="flex mt-3">
@@ -39,7 +39,7 @@
                         {{ book.description }}
                     </p>
                     <div class="font-semibold mt-5 mb-2">Categories</div>
-                    <div class="flex flex-nowrap text-center overflow-scroll  gap-5 scrollbar-hide">
+                    <div class="flex flex-nowrap text-center overflow-scroll  gap-1 scrollbar-hide">
                         <div class="bg-blue-400 px-2 flex-none rounded-sm text-sm text-white"
                             v-for="category in book.categories" :key="category.id">{{ category.name }}</div>
                     </div>

@@ -20,7 +20,6 @@ import { faSpinner, faPlus,faCheck} from '@fortawesome/free-solid-svg-icons'
 import { faStar,faTrashCan, faEllipsisV,faBookBookmark,faList,faPencil } from '@fortawesome/free-solid-svg-icons'
 import { faStar as faRegularStar } from '@fortawesome/free-regular-svg-icons'
 
-
 library.add(
   faEllipsisV, faArrowRight, faCheckCircle,
   faHouse, faGears, faBook, faArrowLeft,

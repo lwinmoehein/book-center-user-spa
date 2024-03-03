@@ -1,6 +1,5 @@
 <template>
-  <div class="p-5 xl:px-0">
-
+  <div class="xl:px-0">
     <div class="p-3 mb-3  top-0 left-0">
             <p class="font-bold text-blue-800 text-xl mb-2">Settings</p>
             <hr />

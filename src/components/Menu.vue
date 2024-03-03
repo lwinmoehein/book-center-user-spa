@@ -1,6 +1,11 @@
 <template>
-  <header class="p-2 md:p-10 text-gray-100 bg-blue-400 flex bottom-0 fixed left-0 right-0 md:top-0 md:h-full h-12  items-center" v-if="authUser">
-    <nav class="container flex items-center md:items-start mx-auto md:gap-6  md:flex-col">
+  <header class="p-2 md:p-0 text-gray-100 bg-blue-400 bottom-0 fixed left-0 right-0 md:top-0 md:h-full h-12  items-center" v-if="authUser">
+    <div class="justify-center hidden md:flex gap-1 items-center bg-blue-500 py-6">
+      <p class="font-bold">Book Center</p>
+      <img src="/icon.png" class="w-5 h-5"/>
+    </div>
+
+    <nav class="container flex items-center md:p-10 md:items-start mx-auto md:gap-6  md:flex-col">
       <div class="flex-1 flex  justify-center">
         <router-link to="/" class="flex justify-center items-center" :class="{ 'text-white font-bold': isHome }">
           <font-awesome-icon icon="fa-solid fa-house" class="text-lg self-center" />

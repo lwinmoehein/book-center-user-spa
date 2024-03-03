@@ -6,10 +6,10 @@
             <div class="p-5">
                 <div class="flex mb-5 items-center">
                     <font-awesome-icon @click="goBack" icon="fa-solid fa-arrow-left" class="font-bold text-xl mr-3 cursor-pointer" />
-                    <div> {{ category.name }} </div>
+                    <div class="font-bold"> {{ category.name }} </div>
                 </div>
                 <div class="grid gap-2 grid-cols-3 md:grid-cols-4 lg:grid-cols-8">
-                    <Book @on-book-clicked="onBookClicked" class="h-64 md:h-80" v-for="book in books" :key="book.id"
+                    <Book @on-book-clicked="onBookClicked" class="h-72 md:h-80" v-for="book in books" :key="book.id"
                         :book="book"></Book>
                 </div>
               <NoData class="mt-52" v-if="books.length<=0 && !loading"/>
