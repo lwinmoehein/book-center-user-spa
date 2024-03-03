@@ -6,7 +6,7 @@
       name="email"
       v-model="email"
       autocomplete="email"
-      placeholder="luke@jedi.com"
+      placeholder="test@test.com"
       class="mb-2"
     />
     <BaseInput
@@ -39,8 +39,8 @@ export default {
   },
   data() {
     return {
-      email: null,
-      password: null,
+      email: "test@test.com",
+      password: "password",
       error: null,
     };
   },

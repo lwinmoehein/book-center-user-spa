@@ -1,6 +1,6 @@
 {
-  "name": "laravel-vue",
-  "version": "0.1.0",
+  "name": "BookCenter",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",

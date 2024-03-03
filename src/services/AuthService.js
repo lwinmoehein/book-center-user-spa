@@ -2,7 +2,7 @@ import axios from "axios";
 import store from "@/store";
 
 export const authClient = axios.create({
-	baseURL: "https://bookcenter-api.lwinmoehein.info",
+	baseURL: process.env.VUE_APP_API_URL,
   withCredentials: true, // required to handle the CSRF token
 });
 
