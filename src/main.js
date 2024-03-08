@@ -17,14 +17,14 @@ import { faGears } from '@fortawesome/free-solid-svg-icons'
 import { faBook } from '@fortawesome/free-solid-svg-icons'
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 import { faSpinner, faPlus,faCheck} from '@fortawesome/free-solid-svg-icons'
-import { faStar,faTrashCan, faEllipsisV,faBookBookmark,faList,faPencil } from '@fortawesome/free-solid-svg-icons'
+import { faStar,faTrashCan, faEllipsisV,faBookBookmark,faList,faPencil,faSignOut } from '@fortawesome/free-solid-svg-icons'
 import { faStar as faRegularStar } from '@fortawesome/free-regular-svg-icons'
 
 library.add(
   faEllipsisV, faArrowRight, faCheckCircle,
   faHouse, faGears, faBook, faArrowLeft,
   faSpinner, faRegularStar, faStar,faPlus,faCheck,
-  faTrashCan,faBookBookmark,faList,faPencil
+  faTrashCan,faBookBookmark,faList,faPencil,faSignOut
 )
 
 /* add font awesome icon component */

@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <main v-if="isLoggedIn" class="container md:w-auto md:h-full pb-20">
+    <main v-if="authUser" class="container md:ml-52 md:w-auto md:h-full pb-20">
       <router-view />
     </main>
     <main v-else class="container  md:w-auto md:h-full">
@@ -21,7 +21,7 @@ export default {
   },
   computed: {
     isLoggedIn() {
-      return this.$route.name != "login" && this.$route.name != "register";
+      return this.$route.name !== "login" && this.$route.name !== "register" &&  this.$route.name !== "verification-notice";
     },
     ...mapGetters(
       'auth',['authUser']
