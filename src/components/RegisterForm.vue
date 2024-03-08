@@ -5,7 +5,7 @@
       label="Name"
       name="name"
       v-model="name"
-      placeholder="Luke Skywalker"
+      placeholder="John Doe"
       class="mb-2"
     />
     <BaseInput
@@ -13,7 +13,7 @@
       label="Email"
       name="email"
       v-model="email"
-      placeholder="luke@jedi.com"
+      placeholder="john@gmail.com"
       class="mb-2"
     />
     <BaseInput
